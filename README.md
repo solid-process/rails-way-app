@@ -16,34 +16,45 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>010-one-controller-per-entity</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1326</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>89.23</td></tr>
+  <tr><td><strong>Branch</strong></td><td>011-one-controller-per-entity_user-concerns</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1350</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>90.34</td></tr>
 </table>
 
-In this version, a single controller is used for each main entity of the system (model).
+**Refactoring with ActiveSupport::Concern:**
 
-This approach is quite common, given that the scaffold generator (presented in almost every Rails tutorial) creates a controller for each model. Based on this premise, it is intuitive to keep a single controller per model and add new actions if necessary.
+This is how this [feature is presented in the Rails Guides](https://guides.rubyonrails.org/getting_started.html#using-concerns):
 
-As a side effect, the user controller contains the largest number of actions (Registration, Authentication, Account Deletion, API Token Refresh, Password Update, and Password Reset). Since it handles different operations, it is less cohesive than the others.
+> Concerns are a way to make large controllers or models easier to understand and manage. This also has the advantage of reusability when multiple models (or controllers) share the same concerns.
+
+Since the user controller has the largest number of actions, this version makes use of ActiveSupport::Concern to separate the different responsibilities of this controller. Here's how the distribution between the files looks:
 
 ```sh
-110 app/controllers/application_controller.rb
-130 app/controllers/task_items_controller.rb
-82  app/controllers/task_lists_controller.rb
-206 app/controllers/users_controller.rb
-528 total
+ 21 app/controllers/users_controller.rb
+ 48 app/controllers/concerns/user_passwords_concern.rb
+ 41 app/controllers/concerns/user_profiles_concern.rb
+ 48 app/controllers/concerns/user_registrations_concern.rb
+ 49 app/controllers/concerns/user_sessions_concern.rb
+ 38 app/controllers/concerns/user_tokens_concern.rb
+245 total
 ```
 
-### 🤔 What is the problem with low cohesion code?  <!-- omit in toc -->
+We can see a positive impact on the Rubycritic score, which went from `89.23` to `90.24`.
 
-Low cohesion leads to greater coupling, higher costs, and efforts to promote changes.
+However, it is important to note that a concern is a mixin. That is, methods with the same name will be overridden. That is why each concern file needs to maintain the prefixes or suffixes in its methods (Examples: new_session, create_session, user_session_params...).
+
+In this case, the use of mixins is just separating a large class into several smaller ones, but in the end, we end up having the same large class, but with its implementation in separate files.
+
+
+### 🤔 Would it be possible to achieve this separation and avoid this collision? <!-- omit in toc -->
+
+The answer is _**yes**_! 🙌
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-It will address the low cohesion of the user controller by extracting concerns into separate modules. This way, each concern will be responsible for specific actions, making the code more cohesive.
+It shows how to separate the concerns into different controllers. This way, we can have a better separation of responsibilities and avoid the collision of methods with the same name.
 
-`Next version:` [011-one-controller-per-entity_user-concerns](https://github.com/solid-process/rails-way-app/tree/011-one-controller-per-entity_user-concerns?tab=readme-ov-file)
+`Next version`: [020-multi-controllers-per-entity](https://github.com/solid-process/rails-way-app/tree/020-multi-controllers-per-entity?tab=readme-ov-file).
 
 ## 📣 Important info
 
