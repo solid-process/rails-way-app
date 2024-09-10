@@ -1,0 +1,15 @@
+<% if task_list.inbox? %>
+  <%= tag.button(
+    style: "background-color: var(--accent-bg); padding: 0.5rem; margin: 0;",
+    disabled: true
+  ) { "📝" } %>
+<% else %>
+  <%= link_to(
+    "📝",
+    edit_task_list_path(task_list),
+    title: "Edit task list",
+    class: "button",
+    style: "background-color: var(--accent-bg); padding: 0.5rem; margin: 0;",
+    disabled: task_list.inbox?
+  ) %>
+<% end %>

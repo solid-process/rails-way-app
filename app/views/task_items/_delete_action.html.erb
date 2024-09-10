@@ -1,0 +1,8 @@
+<%= link_to(
+  "🗑️",
+  task_list_task_item_path(Current.task_list_id, task_item, filter: params[:filter]),
+  title: "Delete task item",
+  data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this task item?" },
+  class: 'button',
+  style: "background-color: var(--accent-bg); padding: 0.5rem; margin: 0;"
+) %>

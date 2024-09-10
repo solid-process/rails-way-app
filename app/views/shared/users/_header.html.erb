@@ -1,0 +1,18 @@
+<% content_for :header do %>
+  <h1>Rails Way App</h1>
+
+  <nav>
+    <%= link_to(
+      "Log in",
+      new_session_users_path,
+      class: current_nav_item?(controller: "sessions")) %>
+    <%= link_to(
+      "Sign up",
+      new_user_path,
+      class: current_nav_item?(controller: "registrations")) %>
+    <%= link_to(
+      "Reset 🔒",
+      new_password_users_path,
+      class: current_nav_item?(controller: "passwords")) %>
+  </nav>
+<% end %>

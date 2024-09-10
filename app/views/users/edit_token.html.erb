@@ -1,0 +1,10 @@
+<%= render("shared/settings/header") %>
+
+<h2>API token</h2>
+
+<pre><%= cookies.encrypted[:user_token] || Current.user.user_token.value %></pre>
+
+<%= button_to("Refresh", token_users_path, {
+  method: :put,
+  data: {confirm: 'Are you sure to generate a new API token?'}
+}) %>

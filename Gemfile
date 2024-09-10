@@ -56,6 +56,10 @@ group :development, :test do
 end
 
 group :development do
+  gem "letter_opener", "~> 1.10"
+
+  gem "rubycritic", "~> 4.9", ">= 4.9.1", require: false
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
@@ -67,4 +71,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  gem "simplecov", require: false
 end

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one_inbox:
+  name: Inbox
+  description: This is your default list, it cannot be deleted.
+  inbox: true
+  account: one
+
+two_inbox:
+  name: Inbox
+  description: This is your default list, it cannot be deleted.
+  inbox: true
+  account: two

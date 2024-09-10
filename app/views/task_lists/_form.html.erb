@@ -1,0 +1,28 @@
+<%= form_with(model: task_list) do |form| %>
+  <% if task_list.errors.any? %>
+    <div style="color: red">
+      <strong><%= pluralize(task_list.errors.count, "error") %> prohibited this task list from being saved:</strong>
+
+      <ul>
+        <% task_list.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description, rows: 3 %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+    <%= link_to("Cancel", task_lists_path, style: "margin-left: 10px") %>
+  </div>
+<% end %>

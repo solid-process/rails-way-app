@@ -1,0 +1,15 @@
+<% content_for :header do %>
+  <h1>Rails Way App (Settings)</h1>
+
+  <nav>
+    <%= link_to("🗂️ Items", task_list_task_items_path(Current.task_list_id)) %>
+
+    <%= link_to("Lists", task_lists_path) %>
+    |
+    <%= link_to("Profile", edit_profile_users_path, class: current_nav_item?(controller: "profiles")) %>
+
+    <%= link_to("API token", edit_token_users_path, class: current_nav_item?(controller: "tokens")) %>
+
+    <%= link_to("Log out", session_users_path, data: {turbo_method: :delete}) %>
+  </nav>
+<% end %>

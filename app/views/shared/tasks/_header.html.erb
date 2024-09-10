@@ -1,0 +1,25 @@
+<% content_for :header do %>
+  <h1>Rails Way App</h1>
+
+  <nav>
+    <div style="display: inline-block">
+      <%= render("shared/tasks/add_new") %>
+
+      <%= link_to(
+        "🗂️ Items",
+        task_list_task_items_path(Current.task_list_id),
+        class: current_nav_item?(controller: "items", action: {not: /new|create/})) %>
+
+      <%= link_to(
+        "Lists",
+        task_lists_path,
+        class: current_nav_item?(controller: "lists", action: {not: /new|create/})) %>
+      |
+      <%= link_to("Settings", edit_profile_users_path) %>
+
+      <%= link_to("Log out", session_users_path, data: {turbo_method: :delete}) %>
+
+      <%= task_lists_selector if controller_name == "task_items" %>
+    </div>
+  </nav>
+<% end %>

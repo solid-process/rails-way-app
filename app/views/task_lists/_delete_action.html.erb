@@ -1,0 +1,16 @@
+<% if task_list.inbox? %>
+  <%= tag.button(
+    style: "background-color: var(--accent-bg); padding: 0.5rem; margin: 0;",
+    disabled: true
+  ) { "🗑️" } %>
+<% else %>
+  <%= link_to(
+    "🗑️",
+    task_list,
+    title: "Delete task list",
+    method: :delete,
+    data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this task list?" },
+    class: "button",
+    style: "background-color: var(--accent-bg); padding: 0.5rem; margin: 0;",
+  ) %>
+<% end %>

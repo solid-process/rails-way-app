@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one: # "Bh3ok8BL_XTNYFvwaRATjSoS3o5zjeQ4gWpQuUjd3"
+  user: one
+  short: "Bh3ok8BL"
+  checksum: "3132a8b305663c08932701514d8e63600e0518e9cfa55600c2d0285748cf8d77"
+
+two: # "dSNZRXsU_QAB7obbYzBZ9NPwD3suoQNxiSP8N2zPn"
+  user: two
+  short: "dSNZRXsU"
+  checksum: "c56c18feda55e9a1e9f9eb552d3310ce27721e70f6e64e47aae73a4ee13200e5"

@@ -13,10 +13,22 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "simpledotcss", "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <%= yield :header %>
+    </header>
+    <main>
+      <% flash.each do |type, message| %>
+        <p class="notice" style="text-align: center; color: <%= type == "alert" ? 'red' : 'green' %>">
+          <strong><%= message %></strong>
+        </p>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>

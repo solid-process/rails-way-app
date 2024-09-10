@@ -1,0 +1,10 @@
+<% if controller_name == "task_lists" %>
+  <%= link_to(" + New list",
+    new_task_list_path,
+    class: current_nav_item?(action: /new|create/)) %>
+<% else %>
+  <%= link_to(
+    " + New item",
+    new_task_list_task_item_path(Current.task_list_id, filter: params[:filter]),
+    class: current_nav_item?(controller: "task_items", action: /new|create/)) %>
+<% end %>
