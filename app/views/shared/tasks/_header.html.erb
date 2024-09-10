@@ -15,9 +15,9 @@
         task_lists_path,
         class: current_nav_item?(controller: "lists", action: {not: /new|create/})) %>
       |
-      <%= link_to("Settings", edit_profile_users_path) %>
+      <%= link_to("Settings", edit_user_profiles_path) %>
 
-      <%= link_to("Log out", session_users_path, data: {turbo_method: :delete}) %>
+      <%= link_to("Log out", user_sessions_path, data: {turbo_method: :delete}) %>
 
       <%= task_lists_selector if controller_name == "task_items" %>
     </div>

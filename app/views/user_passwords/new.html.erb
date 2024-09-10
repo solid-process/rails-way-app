@@ -2,7 +2,7 @@
 
 <h2>Forgot your password?</h2>
 
-<%= form_with(model: @user, url: password_users_path) do |f| %>
+<%= form_with(model: @user, url: user_passwords_path) do |f| %>
   <div>
     <%= f.label :email %>
     <%= f.email_field :email, required: true, autofocus: true, autocomplete: "email" %>

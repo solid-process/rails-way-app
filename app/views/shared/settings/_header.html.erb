@@ -6,10 +6,10 @@
 
     <%= link_to("Lists", task_lists_path) %>
     |
-    <%= link_to("Profile", edit_profile_users_path, class: current_nav_item?(controller: "profiles")) %>
+    <%= link_to("Profile", edit_user_profiles_path, class: current_nav_item?(controller: "profiles")) %>
 
-    <%= link_to("API token", edit_token_users_path, class: current_nav_item?(controller: "tokens")) %>
+    <%= link_to("API token", edit_user_tokens_path, class: current_nav_item?(controller: "tokens")) %>
 
-    <%= link_to("Log out", session_users_path, data: {turbo_method: :delete}) %>
+    <%= link_to("Log out", user_sessions_path, data: {turbo_method: :delete}) %>
   </nav>
 <% end %>

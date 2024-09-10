@@ -1,10 +1,8 @@
 <%= render("shared/users/header") %>
 
-<h2>Sign up</h2>
+<h2>Reset your password</h2>
 
-<p>Please fill in this form to create an account!</p>
-
-<%= form_with(model: @user, url: users_path) do |f| %>
+<%= form_with(model: @user, url: user_password_path(@user)) do |f| %>
   <% if @user.errors.any? %>
     <div style="color: red">
       <strong><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</strong>
@@ -18,27 +16,16 @@
   <% end %>
 
   <div>
-    <%= f.label :email, style: "display: block" %>
-    <%= f.email_field :email, required: true, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div>
-    <%= f.label :password, style: "display: block" %>
+    <%= f.label :password %>
     <%= f.password_field :password, required: true, autocomplete: "new-password" %>
   </div>
 
   <div>
-    <%= f.label :password_confirmation, style: "display: block" %>
+    <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
   </div>
 
   <div>
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Submit" %>
   </div>
 <% end %>
-
-<p>
-  Already have an account?
-  <%= render("shared/users/sign_in_link") %> or
-  <%= render("shared/users/reset_password_link") %>
-</p>

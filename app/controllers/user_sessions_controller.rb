@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-module UserSessionsConcern
-  extend ActiveSupport::Concern
+class UserSessionsController < ApplicationController
+  before_action :authenticate_user!, only: %i[destroy]
+  before_action :require_guest_access!, only: %i[new create]
 
-  def new_session
+  def new
     @user = User.new
   end
 
-  def create_session
-    @user = User.authenticate_by(user_session_params)
+  def create
+    @user = ::User.authenticate_by(user_params)
 
     respond_to do |format|
       if @user
@@ -22,9 +23,9 @@ module UserSessionsConcern
         format.html do
           flash.now[:alert] = "Invalid email or password. Please try again."
 
-          @user = User.new(email: user_session_params[:email])
+          @user = User.new(email: user_params[:email])
 
-          render :new_session, status: :unprocessable_entity
+          render :new, status: :unprocessable_entity
         end
         format.json do
           render("errors/unauthorized", status: :unauthorized, locals: {
@@ -35,15 +36,15 @@ module UserSessionsConcern
     end
   end
 
-  def destroy_session
+  def destroy
     sign_out
 
-    redirect_to new_session_users_path, notice: "You have successfully signed out."
+    redirect_to new_user_session_path, notice: "You have successfully signed out."
   end
 
   private
 
-  def user_session_params
+  def user_params
     params.require(:user).permit(:email, :password)
   end
 end

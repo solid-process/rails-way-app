@@ -4,7 +4,7 @@
 
 <pre><%= cookies.encrypted[:user_token] || Current.user.user_token.value %></pre>
 
-<%= button_to("Refresh", token_users_path, {
+<%= button_to("Refresh", user_tokens_path, {
   method: :put,
   data: {confirm: 'Are you sure to generate a new API token?'}
 }) %>

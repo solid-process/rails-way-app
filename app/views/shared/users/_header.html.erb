@@ -4,15 +4,15 @@
   <nav>
     <%= link_to(
       "Log in",
-      new_session_users_path,
+      new_user_session_path,
       class: current_nav_item?(controller: "sessions")) %>
     <%= link_to(
       "Sign up",
-      new_user_path,
+      new_user_registration_path,
       class: current_nav_item?(controller: "registrations")) %>
     <%= link_to(
       "Reset 🔒",
-      new_password_users_path,
+      new_user_password_path,
       class: current_nav_item?(controller: "passwords")) %>
   </nav>
 <% end %>

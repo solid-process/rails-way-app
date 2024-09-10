@@ -16,45 +16,51 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>011-one-controller-per-entity_user-concerns</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1350</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>90.34</td></tr>
+  <tr><td><strong>Branch</strong></td><td>020-multi-controllers-per-entity</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1342</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>91.34</td></tr>
 </table>
 
-**Refactoring with ActiveSupport::Concern:**
+The previous version demonstrates how concerns can help safely move code around, facilitating a better understanding of the different responsibilities in an implementation.
 
-This is how this [feature is presented in the Rails Guides](https://guides.rubyonrails.org/getting_started.html#using-concerns):
+These were the created concerns:
+- `UserRegistrationsConcern`
+- `UserSessionsConcern`
+- `UserPasswordsConcern`
+- `UserTokensConcern`
+- `UserProfilesConcern`
 
-> Concerns are a way to make large controllers or models easier to understand and manage. This also has the advantage of reusability when multiple models (or controllers) share the same concerns.
+However, since the concerns are mixins, we need to ensure that all method names are unique. After all, if any are repeated, they will overwrite each other.
 
-Since the user controller has the largest number of actions, this version makes use of ActiveSupport::Concern to separate the different responsibilities of this controller. Here's how the distribution between the files looks:
+And here is what this version does. It uses the concerns categorization to implement dedicated routes and controllers.
+
+See how the controllers turned out:
 
 ```sh
- 21 app/controllers/users_controller.rb
- 48 app/controllers/concerns/user_passwords_concern.rb
- 41 app/controllers/concerns/user_profiles_concern.rb
- 48 app/controllers/concerns/user_registrations_concern.rb
- 49 app/controllers/concerns/user_sessions_concern.rb
- 38 app/controllers/concerns/user_tokens_concern.rb
-245 total
+110 app/controllers/application_controller.rb
+130 app/controllers/task_items_controller.rb
+ 82 app/controllers/task_lists_controller.rb
+ 60 app/controllers/user_passwords_controller.rb
+ 41 app/controllers/user_profiles_controller.rb
+ 49 app/controllers/user_registrations_controller.rb
+ 50 app/controllers/user_sessions_controller.rb
+ 25 app/controllers/user_tokens_controller.rb
+547 total
 ```
 
-We can see a positive impact on the Rubycritic score, which went from `89.23` to `90.24`.
+### 🤔 What was changed? <!-- omit in toc -->
 
-However, it is important to note that a concern is a mixin. That is, methods with the same name will be overridden. That is why each concern file needs to maintain the prefixes or suffixes in its methods (Examples: new_session, create_session, user_session_params...).
+The Rubycritic score increased from `90.34` to `91.34`.
 
-In this case, the use of mixins is just separating a large class into several smaller ones, but in the end, we end up having the same large class, but with its implementation in separate files.
+This happened because each controller allowed the isolation of each action and callback and allowed the definition of methods with the same name. (Example: `user_params` instead of `user_registration_params`, `user_session_params`, `user_password_params`...).
 
-
-### 🤔 Would it be possible to achieve this separation and avoid this collision? <!-- omit in toc -->
-
-The answer is _**yes**_! 🙌
+Another benefit was the routing definition. It became more readable and easier to understand as it was possible to declare them using only default `REST` actions (index, show, new, create, edit, update, destroy).
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-It shows how to separate the concerns into different controllers. This way, we can have a better separation of responsibilities and avoid the collision of methods with the same name.
+It shows how the restriction of REST actions can enforce cohesion and ensure controllers are responsible for specific contexts/concepts.
 
-`Next version`: [020-multi-controllers-per-entity](https://github.com/solid-process/rails-way-app/tree/020-multi-controllers-per-entity?tab=readme-ov-file).
+`Next version`: [021-multi-controllers-per-entity_rest-actions-only](https://github.com/solid-process/rails-way-app/tree/021-multi-controllers-per-entity_rest-actions-only?tab=readme-ov-file).
 
 ## 📣 Important info
 

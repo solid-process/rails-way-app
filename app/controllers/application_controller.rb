@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
           if current_user_id.present?
             [ "The page you are looking for does not exist, or you cannot access it.", task_lists_path ]
           else
-            [ "You need to sign in or sign up before continuing.", new_session_users_path ]
+            [ "You need to sign in or sign up before continuing.", new_user_session_path ]
           end
 
         redirect_to next_path, alert:

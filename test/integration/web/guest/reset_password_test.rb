@@ -64,7 +64,7 @@ class WebGuestResetPasswordTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, emails.size
 
-    token = emails.first.parts.last.to_s.match(%r{users/(.*)/password})[1]
+    token = emails.first.parts.last.to_s.match(%r{passwords/(.*)/edit})[1]
 
     get(web_helper.edit_user__password_url(id: token))
 
@@ -93,7 +93,7 @@ class WebGuestResetPasswordTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, emails.size
 
-    token = emails.first.parts.last.to_s.match(%r{users/(.*)/password})[1]
+    token = emails.first.parts.last.to_s.match(%r{passwords/(.*)/edit})[1]
 
     get(web_helper.edit_user__password_url(token))
 

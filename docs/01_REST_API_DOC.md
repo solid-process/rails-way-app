@@ -49,7 +49,7 @@ You can get the `API_TOKEN` by:
 #### Registration
 
 ```bash
-curl -X POST "$API_HOST/users" \
+curl -X POST "$API_HOST/user_registrations" \
   -H "Content-Type: application/json" \
   -d '{
     "user": {
@@ -65,7 +65,7 @@ curl -X POST "$API_HOST/users" \
 #### Authentication
 
 ```bash
-curl -X POST "$API_HOST/users/session" \
+curl -X POST "$API_HOST/user_sessions" \
   -H "Content-Type: application/json" \
   -d '{
     "user": {
@@ -80,7 +80,7 @@ curl -X POST "$API_HOST/users/session" \
 #### Account deletion
 
 ```bash
-curl -X DELETE "$API_HOST/users" \
+curl -X DELETE "$API_HOST/user_registrations" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -90,7 +90,7 @@ curl -X DELETE "$API_HOST/users" \
 #### API token updating
 
 ```bash
-curl -X PUT "$API_HOST/users/token" \
+curl -X PUT "$API_HOST/user_tokens" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -100,7 +100,7 @@ curl -X PUT "$API_HOST/users/token" \
 #### Password updating
 
 ```bash
-curl -X PUT "$API_HOST/users/profile" \
+curl -X PUT "$API_HOST/user_profiles" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   -d '{
@@ -117,7 +117,7 @@ curl -X PUT "$API_HOST/users/profile" \
 #### Password resetting - Link to change the password
 
 ```bash
-curl -X POST "$API_HOST/users/password" \
+curl -X POST "$API_HOST/user_passwords" \
   -H "Content-Type: application/json" \
   -d '{"user": {"email": "email@example.com"}}'
 ```
@@ -127,7 +127,7 @@ curl -X POST "$API_HOST/users/password" \
 #### Password resetting - Change the password
 
 ```bash
-curl -X PUT "$API_HOST/users/TOKEN_RETRIEVED_BY_EMAIL/password" \
+curl -X PUT "$API_HOST/user_passwords/TOKEN_RETRIEVED_BY_EMAIL" \
   -H "Content-Type: application/json" \
   -d '{
     "user": {

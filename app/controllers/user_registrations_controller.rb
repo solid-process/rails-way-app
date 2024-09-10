@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-module UserRegistrationsConcern
-  extend ActiveSupport::Concern
+class UserRegistrationsController < ApplicationController
+  before_action :authenticate_user!, only: %i[destroy]
+  before_action :require_guest_access!, except: %i[destroy]
 
   def new
     @user = User.new
@@ -10,7 +11,7 @@ module UserRegistrationsConcern
   end
 
   def create
-    @user = User.new(user_registration_params)
+    @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -42,7 +43,7 @@ module UserRegistrationsConcern
 
   private
 
-  def user_registration_params
+  def user_params
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
 end

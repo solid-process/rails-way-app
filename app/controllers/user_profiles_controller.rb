@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module UserProfilesConcern
-  extend ActiveSupport::Concern
+class UserProfilesController < ApplicationController
+  before_action :authenticate_user!
 
-  def edit_profile
+  def edit
   end
 
-  def update_profile
-    user_profile_params[:password_challenge] = user_profile_params.delete(:current_password) if user_profile_params.key?(:current_password)
+  def update
+    user_params[:password_challenge] = user_params.delete(:current_password) if user_params.key?(:current_password)
 
     respond_to do |format|
-      if Current.user.update(user_profile_params)
-        format.html { redirect_to edit_profile_users_path, notice: "Your password has been updated." }
+      if Current.user.update(user_params)
+        format.html { redirect_to edit_user_profiles_path, notice: "Your password has been updated." }
         format.json { render(status: :ok, json: { status: :success }) }
       else
-        format.html { render(:edit_profile, status: :unprocessable_entity) }
+        format.html { render(:edit, status: :unprocessable_entity) }
         format.json do
           message = Current.user.errors.full_messages.join(", ")
           message.gsub!("Password challenge", "Current password")
@@ -30,8 +30,8 @@ module UserProfilesConcern
 
   private
 
-  def user_profile_params
-    @user_profile_params ||= params.require(:user).permit(
+  def user_params
+    @user_params ||= params.require(:user).permit(
       :current_password,
       :password,
       :password_confirmation,

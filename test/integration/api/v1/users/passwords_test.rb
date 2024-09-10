@@ -73,7 +73,7 @@ class APIV1UserPasswordsTest < ActionDispatch::IntegrationTest
       post(api_v1_helper.user__passwords_url, params: { user: { email: user.email } })
     end
 
-    token = emails.first.parts.last.to_s.match(%r{users/(.*)/password})[1]
+    token = emails.first.parts.last.to_s.match(%r{passwords/(.*)/edit})[1]
 
     params = {
       user: {

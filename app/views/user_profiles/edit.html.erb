@@ -2,7 +2,7 @@
 
 <h2>User profile</h2>
 
-<%= form_with(model: Current.user, url: profile_users_path, method: :put) do |f| %>
+<%= form_with(model: Current.user, url: user_profiles_path, method: :put) do |f| %>
   <% if f.object.errors.any? %>
     <div style="color: red">
       <strong><%= pluralize(f.object.errors.count, "error") %> prohibited this user from being saved:</strong>
@@ -51,7 +51,7 @@
 
 <%= button_to(
   "Delete account",
-  users_path,
+  user_registrations_path,
   method: :delete,
   data: {turbo_confirm: "Are you sure you want to delete your account?"},
   style: "background-color: red; color: white; border: none"

@@ -89,22 +89,22 @@ class ActionDispatch::IntegrationTest
       test.assert_select(".notice", "You need to sign in or sign up before continuing.")
     end
 
-    def user__sessions_url = test.session_users_url
-    def new_user__session_url = test.new_session_users_url
+    def user__sessions_url = test.user_sessions_url
+    def new_user__session_url = test.new_user_session_url
 
-    def user__registrations_url = test.users_url
-    def new_user__registration_url = test.new_user_url
+    def user__registrations_url = test.user_registrations_url
+    def new_user__registration_url = test.new_user_registration_url
 
-    def user__password_url(...) = test.password_user_url(...)
-    def user__passwords_url = test.password_users_url
-    def new_user__password_url = test.new_password_users_url
-    def edit_user__password_url(...) = test.edit_password_user_url(...)
+    def user__password_url(...) = test.user_password_url(...)
+    def user__passwords_url = test.user_passwords_url
+    def new_user__password_url = test.new_user_password_url
+    def edit_user__password_url(...) = test.edit_user_password_url(...)
 
-    def user__tokens_url = test.token_users_url
-    def edit_user__token_url = test.edit_token_users_url
+    def user__tokens_url = test.user_tokens_url
+    def edit_user__token_url = test.edit_user_tokens_url
 
-    def user__profiles_url = test.profile_users_url
-    def edit_user__profile_url = test.edit_profile_users_url
+    def user__profiles_url = test.user_profiles_url
+    def edit_user__profile_url = test.edit_user_profiles_url
 
     def task__list_url(...) = test.task_list_url(...)
     def task__lists_url = test.task_lists_url
@@ -160,16 +160,16 @@ class ActionDispatch::IntegrationTest
       json_data
     end
 
-    def user__sessions_url = test.session_users_url(format: :json)
+    def user__sessions_url = test.user_sessions_url(format: :json)
 
-    def user__registrations_url = test.users_url(format: :json)
+    def user__registrations_url = test.user_registrations_url(format: :json)
 
-    def user__password_url(...) = test.password_user_url(...)
-    def user__passwords_url = test.password_users_url(format: :json)
+    def user__password_url(...) = test.user_password_url(...)
+    def user__passwords_url = test.user_passwords_url(format: :json)
 
-    def user__tokens_url = test.token_users_url(format: :json)
+    def user__tokens_url = test.user_tokens_url(format: :json)
 
-    def user__profiles_url = test.profile_users_url(format: :json)
+    def user__profiles_url = test.user_profiles_url(format: :json)
 
     def task__list_url(...) = test.task_list_url(...)
     def task__lists_url = test.task_lists_url(format: :json)
