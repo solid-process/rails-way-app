@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class Task::Items::IncompleteController < ApplicationController
-  include TaskItemsConcern
-
+class Task::Items::IncompleteController < Task::Items::BaseController
   before_action :authenticate_user!
   before_action :require_task_list!
   before_action :set_task_item

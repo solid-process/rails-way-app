@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class Task::ItemsController < ApplicationController
-  include TaskItemsConcern
-
+class Task::ItemsController < Task::Items::BaseController
   before_action :authenticate_user!
   before_action :require_task_list!
   before_action :set_task_item, except: %i[index new create]

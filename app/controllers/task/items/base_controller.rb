@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-module TaskItemsConcern
-  extend ActiveSupport::Concern
+class Task::Items::BaseController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    raise exception unless request.format.json?
 
-  included do
-    rescue_from ActiveRecord::RecordNotFound do |exception|
-      raise exception unless request.format.json?
-
-      render_json_with_error(status: :not_found, message: "Task list or item not found")
-    end
+    render_json_with_error(status: :not_found, message: "Task list or item not found")
   end
 
   private
