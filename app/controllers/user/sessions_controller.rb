@@ -18,7 +18,7 @@ class User::SessionsController < ApplicationController
 
           redirect_to task_list_items_path(Current.task_list_id), notice: "You have successfully signed in!"
         end
-        format.json { render "shared/users/user_token", status: :ok }
+        format.json { render "user/shared/user_token", status: :ok }
       else
         format.html do
           flash.now[:alert] = "Invalid email or password. Please try again."

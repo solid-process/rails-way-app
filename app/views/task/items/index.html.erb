@@ -1,4 +1,4 @@
-<%= render("shared/tasks/header") %>
+<%= render("task/shared/header") %>
 
 <% if Current.task_list.task_items.exists? %>
   <p style="text-align: center"><strong>Filter:</strong> <%= link_to_task_item_filters %></p>
@@ -20,9 +20,9 @@
                 task_list_item_path(Current.task_list_id, task_item, filter: params[:filter])) %>
               <div><small><%= truncate(task_item.description, length: 75) %></small></div>
             </td>
-            <td><%= render("toggle_status_action", task_item:) %></td>
-            <td><%= render("edit_action", task_item:) %></td>
-            <td><%= render("delete_action", task_item:) %></td>
+            <td><%= render("task/items/actions/toggle_status", task_item:) %></td>
+            <td><%= render("task/items/actions/edit", task_item:) %></td>
+            <td><%= render("task/items/actions/delete", task_item:) %></td>
           </tr>
         <% end %>
       </tbody>

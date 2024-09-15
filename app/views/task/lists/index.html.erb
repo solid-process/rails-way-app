@@ -1,4 +1,4 @@
-<%= render("shared/tasks/header") %>
+<%= render("task/shared/header") %>
 
 <h2>All task lists</h2>
 
@@ -16,9 +16,9 @@
           <%= link_to(task_list.name, task_list) %>
           <div><small><%= truncate(task_list.description, length: 75) %></small></div>
         </td>
-        <td><%= render("view_items_action", task_list:) %></td>
-        <td><%= render("edit_action", task_list:) %></td>
-        <td><%= render("delete_action", task_list:) %></td>
+        <td><%= render("task/lists/actions/view_items", task_list:) %></td>
+        <td><%= render("task/lists/actions/edit", task_list:) %></td>
+        <td><%= render("task/lists/actions/delete", task_list:) %></td>
       </tr>
     <% end %>
   </tbody>

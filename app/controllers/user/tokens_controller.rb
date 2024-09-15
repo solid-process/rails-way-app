@@ -18,7 +18,7 @@ class User::TokensController < ApplicationController
       format.json do
         @user = Current.user
 
-        render "shared/users/user_token", status: :ok
+        render "user/shared/user_token", status: :ok
       end
     end
   end

@@ -16,43 +16,87 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>031-resources-within-namespaces_base-controllers</td></tr>
+  <tr><td><strong>Branch</strong></td><td>032-resources-within-namespaces_partials-grouped-by-context</td></tr>
   <tr><td><strong>Lines of Code</strong></td><td>1355</td></tr>
   <tr><td><strong>Rubycritic Score</strong></td><td>91.56</td></tr>
 </table>
 
-In the branch `021-multi-controllers-per-entity_rest_actions_only`, the `TaskItemsConcern` was introduced to share code among the task item controllers.
+The previous version revealed the benefits of group controller within namespaces. This version will apply the same ideas to the view partials.
 
-However, as with the previously introduced namespaces, this version introduces the concept of base controllers to replace the concern usage. This way, the controllers within a namespace can have specific (more cohesive) parent classes.
+Let's see comparation between the previous and current structure:
 
-See below how the task controllers are organized:
+<table>
+  <tr>
+    <th>Previous</th>
+    <th>Current</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+app/views
+├── shared
+│  ├── settings
+│  │  └── _header.html.erb
+│  ├── tasks
+│  │  ├── _add_new.html.erb
+│  │  └── _header.html.erb
+│  └── users
+│     ├── _header.html.erb
+│     ├── _reset_password_link.html.erb
+│     ├── _sign_in_link.html.erb
+│     ├── _sign_up_link.html.erb
+│     └── user_token.json.jbuilder
+├── task
+│  ├── items
+│  │  ├── _delete_action.html.erb
+│  │  ├── _edit_action.html.erb
+│  │  ├── _toggle_status_action.html.erb
+│  └── lists
+│     ├── _delete_action.html.erb
+│     ├── _edit_action.html.erb
+│     ├── _view_items_action.html.erb</pre>
+    </td>
+    <td>
+      <pre>
+app/views
+├── task
+│  ├── items
+│  │  ├── actions
+│  │  │  ├── _delete.html.erb
+│  │  │  ├── _edit.html.erb
+│  │  │  └── _toggle_status.html.erb
+│  ├── lists
+│  │  ├── actions
+│  │  │  ├── _delete.html.erb
+│  │  │  ├── _edit.html.erb
+│  │  │  └── _view_items.html.erb
+│  └── shared
+│     ├── _add_new.html.erb
+│     └── _header.html.erb
+├── user
+│  ├── shared
+│  │  ├── _header.html.erb
+│  │  ├── links
+│  │  │  ├── _reset_password.html.erb
+│  │  │  ├── _sign_in.html.erb
+│  │  │  └── _sign_up.html.erb
+│  │  ├── settings
+│  │  │  └── _header.html.erb</pre>
+    </td>
+  </tr>
+</table>
 
-```sh
-app/controllers/task
-├── items
-│  ├── base_controller.rb
-│  ├── complete_controller.rb
-│  └── incomplete_controller.rb
-└── items_controller.rb
-```
+### 🤔 Why is this structure more cohesive than the previous one? <!-- omit in toc -->
 
-```ruby
-Task::ItemsController < Task::Items::BaseController
-Task::Items::CompletedController < Task::Items::BaseController
-Task::Items::IncompleteController < Task::Items::BaseController
-```
+To answer this, let's analyze the partials in the app/views/shared folder from the previous version. It was less cohesive because it knew all the application contexts (settings, tasks, and users).
 
-### 🤔 What are the benefits of using base controllers? <!-- omit in toc -->
-
-Since the previous version, we can see that the Rubycritic score has remained the same, which is positive given that the improvements in the structure do not complicate the existing implementation.
-
-Although the score has not changed, we can see how this grouping reduces the effort to understand and find your way around the code. This also translates into increased cohesion, not at the class level but at the namespace level (groups of classes and modules).
+The current version shows that these partials have been moved to task or user contexts. This change created a more cohesive structure because of the lower indirection and greater specificity of each partial's use.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-The cohesion ideas (organization and grouping guided to a specific purpose) will be applied to views and partials. Check out to see the benefits of this approach.
+Aiming increasing the cohesion of the application, the next version will move the mailer views under the entity user context.
 
-`Next version`: [032-resources-within-namespaces_partials-grouped-by-context](https://github.com/solid-process/rails-way-app/tree/032-resources-within-namespaces_partials-grouped-by-context?tab=readme-ov-file).
+`Next version`: [033-resources-within-namespaces_mailers-under-entity-context](https://github.com/solid-process/rails-way-app/tree/033-resources-within-namespaces_mailers-under-entity-context?tab=readme-ov-file).
 
 ## 📣 Important info
 
