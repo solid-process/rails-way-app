@@ -1,0 +1,31 @@
+<%= render("web/task/shared/header") %>
+
+<h2>All task lists</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3" style="text-align: center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @task_lists.each do |task_list| %>
+      <tr>
+        <td style="width: 100%">
+          <%= link_to(task_list.name, task_list) %>
+          <div><small><%= truncate(task_list.description, length: 75) %></small></div>
+        </td>
+        <td><%= render("web/task/lists/actions/view_items", task_list:) %></td>
+        <td><%= render("web/task/lists/actions/edit", task_list:) %></td>
+        <td><%= render("web/task/lists/actions/delete", task_list:) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to(
+  "+ New list",
+  new_task_list_path,
+  class: "button",
+  style: "width: 100%; text-align: center") %>

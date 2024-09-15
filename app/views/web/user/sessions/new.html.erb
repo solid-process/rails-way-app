@@ -1,0 +1,25 @@
+<%= render("web/user/shared/header") %>
+
+<h2>Please sign in</h2>
+
+<%= form_with(model: @user, url: user_sessions_path) do |f| %>
+  <div>
+    <%= f.label :email, style: "display: block" %>
+    <%= f.email_field :email, required: true, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div>
+    <%= f.label :password, style: "display: block" %>
+    <%= f.password_field :password, required: true, autocomplete: "current-password" %>
+  </div>
+
+  <div>
+    <%= f.submit "Log in" %>
+  </div>
+<% end %>
+
+<p>
+  Don't have an account?
+  <%= render("web/user/shared/links/sign_up") %> or
+  <%= render("web/user/shared/links/reset_password") %>
+</p>

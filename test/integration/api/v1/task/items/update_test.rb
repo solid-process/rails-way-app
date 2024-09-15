@@ -9,7 +9,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: "Foo" } }
     headers = [ {}, api_v1_helper.authorization_header(SecureRandom.hex(20)) ].sample
 
-    put(api_v1_helper.task__item_url(member!(user).inbox, task, format: :json), params:, headers:)
+    put(api_v1_helper.task__item_url(member!(user).inbox, task), params:, headers:)
 
     api_v1_helper.assert_response_with_error(:unauthorized)
   end
@@ -20,7 +20,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = [ {}, { task_item: {} }, { task: nil } ].sample
 
     put(
-      api_v1_helper.task__item_url(member!(user).inbox, task, format: :json),
+      api_v1_helper.task__item_url(member!(user).inbox, task),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -33,7 +33,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     task = task_items(:one)
     params = { task_item: { name: "Foo" } }
 
-    url = api_v1_helper.task__item_url(Task::List.maximum(:id) + 1, task.id, format: :json)
+    url = api_v1_helper.task__item_url(Task::List.maximum(:id) + 1, task.id)
 
     put(url, params:, headers: api_v1_helper.authorization_header(user))
 
@@ -44,7 +44,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     user = users(:one)
     params = { task_item: { name: "Foo" } }
 
-    url = api_v1_helper.task__item_url(member!(user).inbox, Task::Item.maximum(:id) + 1, format: :json)
+    url = api_v1_helper.task__item_url(member!(user).inbox, Task::Item.maximum(:id) + 1)
 
     put(url, params:, headers: api_v1_helper.authorization_header(user))
 
@@ -57,7 +57,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: "Foo" } }
 
     put(
-      api_v1_helper.task__item_url(task.list, task, format: :json),
+      api_v1_helper.task__item_url(task.list, task),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -71,7 +71,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: [ nil, "" ].sample } }
 
     put(
-      api_v1_helper.task__item_url(member!(user).inbox, task, format: :json),
+      api_v1_helper.task__item_url(member!(user).inbox, task),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -85,7 +85,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: SecureRandom.hex } }
 
     put(
-      api_v1_helper.task__item_url(member!(user).inbox, task, format: :json),
+      api_v1_helper.task__item_url(member!(user).inbox, task),
       params:,
       headers: api_v1_helper.authorization_header(user)
     )
@@ -103,7 +103,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_item: { completed: [ true, 1, "1", "true" ].sample } }
 
     put(
-      api_v1_helper.task__item_url(member!(user).inbox, task, format: :json),
+      api_v1_helper.task__item_url(member!(user).inbox, task),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -122,7 +122,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_item: { completed: [ false, 0, "0", "false" ].sample } }
 
     put(
-      api_v1_helper.task__item_url(member!(user).inbox, task, format: :json),
+      api_v1_helper.task__item_url(member!(user).inbox, task),
       headers: api_v1_helper.authorization_header(user),
       params:
     )

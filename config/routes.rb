@@ -11,30 +11,59 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  namespace :user do
-    resource :session, only: [ :destroy ]
-    resource :registration, only: [ :destroy ]
+  scope module: :web, defaults: { format: "html" }, constraints: { format: "html" } do
+    namespace :user do
+      resource :session, only: [ :destroy ]
+      resource :registration, only: [ :destroy ]
 
-    resources :sessions, only: [ :new, :create ]
-    resources :passwords, only: [ :new, :create, :edit, :update ]
-    resources :registrations, only: [ :new, :create ]
+      resources :sessions, only: [ :new, :create ]
+      resources :passwords, only: [ :new, :create, :edit, :update ]
+      resources :registrations, only: [ :new, :create ]
 
-    namespace :settings do
-      resource :profile, only: [ :edit, :update ]
-      resource :token, only: [ :edit, :update ]
+      namespace :settings do
+        resource :profile, only: [ :edit, :update ]
+        resource :token, only: [ :edit, :update ]
+      end
+    end
+
+    namespace :task do
+      resources :lists do
+        resources :items
+        namespace :items do
+          resources :complete, only: [ :update ]
+          resources :incomplete, only: [ :update ]
+        end
+      end
     end
   end
 
-  namespace :task do
-    resources :lists do
-      resources :items
-      namespace :items do
-        resources :complete, only: [ :update ]
-        resources :incomplete, only: [ :update ]
+  namespace :api, defaults: { format: "json" }, constraints: { format: "json" } do
+    namespace :v1 do
+      namespace :user do
+        resource :token, only: [ :update ]
+        resource :password, only: [ :update ]
+        resource :registration, only: [ :destroy ]
+
+        resources :sessions, only: [ :create ]
+        resources :registrations, only: [ :create ]
+
+        namespace :passwords do
+          resource :resetting, only: [ :create, :update ]
+        end
+      end
+
+      namespace :task do
+        resources :lists, except: [ :new, :edit ] do
+          resources :items, except: [ :new, :edit ]
+          namespace :items do
+            resources :complete, only: [ :update ]
+            resources :incomplete, only: [ :update ]
+          end
+        end
       end
     end
   end
 
   # Defines the root path route ("/")
-  root "user/sessions#new"
+  root "web/user/sessions#new"
 end

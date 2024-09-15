@@ -162,25 +162,20 @@ class ActionDispatch::IntegrationTest
       json_data
     end
 
-    def user__sessions_url = test.user_sessions_url(format: :json)
+    def user__tokens_url = test.api_v1_user_token_url
+    def user__sessions_url = test.api_v1_user_sessions_url
+    def user__password_url = test.api_v1_user_password_url
+    def user__registration_url = test.api_v1_user_registration_url
+    def user__registrations_url = test.api_v1_user_registrations_url
+    def user__passwords_resetting_url(...) = test.api_v1_user_passwords_resetting_url(...)
 
-    def user__registration_url = test.user_registration_url(format: :json)
-    def user__registrations_url = test.user_registrations_url(format: :json)
+    def task__list_url(...) = test.api_v1_task_list_url(...)
+    def task__lists_url = test.api_v1_task_lists_url
 
-    def user__password_url(...) = test.user_password_url(...)
-    def user__passwords_url = test.user_passwords_url(format: :json)
-
-    def user__tokens_url = test.user_settings_token_url(format: :json)
-
-    def user__profiles_url = test.user_settings_profile_url(format: :json)
-
-    def task__list_url(...) = test.task_list_url(...)
-    def task__lists_url = test.task_lists_url(format: :json)
-
-    def task__item_url(...) = test.task_list_item_url(...)
-    def task__items_url(...) = test.task_list_items_url(...)
-    def complete_task__item_url(...) = test.task_list_items_complete_url(...)
-    def incomplete_task__item_url(...) = test.task_list_items_incomplete_url(...)
+    def task__item_url(...) = test.api_v1_task_list_item_url(...)
+    def task__items_url(...) = test.api_v1_task_list_items_url(...)
+    def complete_task__item_url(...) = test.api_v1_task_list_items_complete_url(...)
+    def incomplete_task__item_url(...) = test.api_v1_task_list_items_incomplete_url(...)
   end
 
   def web_helper

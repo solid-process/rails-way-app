@@ -8,7 +8,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: "Foo" } }
     headers = [ {}, api_v1_helper.authorization_header(SecureRandom.hex(20)) ].sample
 
-    post(api_v1_helper.task__items_url(member!(user).inbox, format: :json), params:, headers:)
+    post(api_v1_helper.task__items_url(member!(user).inbox), params:, headers:)
 
     api_v1_helper.assert_response_with_error(:unauthorized)
   end
@@ -18,7 +18,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
     params = [ {}, { task_item: {} }, { task: nil } ].sample
 
     post(
-      api_v1_helper.task__items_url(member!(user).inbox, format: :json),
+      api_v1_helper.task__items_url(member!(user).inbox),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -31,7 +31,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: "Foo" } }
 
     post(
-      api_v1_helper.task__items_url(Task::List.maximum(:id) + 1, format: :json),
+      api_v1_helper.task__items_url(Task::List.maximum(:id) + 1),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -45,7 +45,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: "Foo" } }
 
     post(
-      api_v1_helper.task__items_url(task_list, format: :json),
+      api_v1_helper.task__items_url(task_list),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -58,7 +58,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: [ nil, "" ].sample } }
 
     post(
-      api_v1_helper.task__items_url(member!(user).inbox, format: :json),
+      api_v1_helper.task__items_url(member!(user).inbox),
       headers: api_v1_helper.authorization_header(user),
       params:
     )
@@ -72,7 +72,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
 
     assert_difference -> { member!(user).inbox.items.count } do
       post(
-        api_v1_helper.task__items_url(member!(user).inbox, format: :json),
+        api_v1_helper.task__items_url(member!(user).inbox),
         headers: api_v1_helper.authorization_header(user),
         params:
       )

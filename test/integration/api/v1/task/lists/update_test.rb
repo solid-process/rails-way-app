@@ -6,7 +6,7 @@ class APIV1TaskListsUpdateTest < ActionDispatch::IntegrationTest
   test "#update responds with 401 when API token is invalid" do
     headers = [ {}, api_v1_helper.authorization_header(SecureRandom.hex(20)) ].sample
 
-    put(api_v1_helper.task__list_url(task_lists(:one_inbox), format: :json), headers:)
+    put(api_v1_helper.task__list_url(task_lists(:one_inbox)), headers:)
 
     api_v1_helper.assert_response_with_error(:unauthorized)
   end
@@ -16,7 +16,7 @@ class APIV1TaskListsUpdateTest < ActionDispatch::IntegrationTest
     params = { task_list: { name: "Foo" } }
     headers = api_v1_helper.authorization_header(user)
 
-    put(api_v1_helper.task__list_url(Task::List.maximum(:id) + 1, format: :json), params:, headers:)
+    put(api_v1_helper.task__list_url(Task::List.maximum(:id) + 1), params:, headers:)
 
     assert_response :not_found
   end
@@ -28,7 +28,7 @@ class APIV1TaskListsUpdateTest < ActionDispatch::IntegrationTest
 
     params = [ {}, { task_list: {} }, { task_list: nil } ].sample
 
-    put(api_v1_helper.task__list_url(task_list, format: :json), params:, headers: api_v1_helper.authorization_header(user))
+    put(api_v1_helper.task__list_url(task_list), params:, headers: api_v1_helper.authorization_header(user))
 
     api_v1_helper.assert_response_with_error(:bad_request)
   end
@@ -38,7 +38,7 @@ class APIV1TaskListsUpdateTest < ActionDispatch::IntegrationTest
 
     params = { task_list: { name: "Biz" } }
 
-    put(api_v1_helper.task__list_url(task_lists(:one_inbox), format: :json), params:, headers: api_v1_helper.authorization_header(user))
+    put(api_v1_helper.task__list_url(task_lists(:one_inbox)), params:, headers: api_v1_helper.authorization_header(user))
 
     api_v1_helper.assert_response_with_error(:forbidden)
   end
@@ -50,7 +50,7 @@ class APIV1TaskListsUpdateTest < ActionDispatch::IntegrationTest
 
     params = { task_list: { name: [ nil, "" ].sample } }
 
-    put(api_v1_helper.task__list_url(task_list, format: :json), params:, headers: api_v1_helper.authorization_header(user))
+    put(api_v1_helper.task__list_url(task_list), params:, headers: api_v1_helper.authorization_header(user))
 
     api_v1_helper.assert_response_with_error(:unprocessable_entity)
   end
@@ -62,7 +62,7 @@ class APIV1TaskListsUpdateTest < ActionDispatch::IntegrationTest
 
     params = { task_list: { name: "Foo" } }
 
-    put(api_v1_helper.task__list_url(task_list, format: :json), params:, headers: api_v1_helper.authorization_header(user))
+    put(api_v1_helper.task__list_url(task_list), params:, headers: api_v1_helper.authorization_header(user))
 
     json_data = api_v1_helper.assert_response_with_success(:ok)
 

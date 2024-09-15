@@ -16,68 +16,164 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>040-models-within-namespaces</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1359</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>91.56</td></tr>
+  <tr><td><strong>Branch</strong></td><td>050-separation-of-entry-points</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1462</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>94.04</td></tr>
 </table>
 
-The previous versions already showed the benefits of organizing the codebase. This version goes further by grouping models within namespaces.
+This version shows a substantial increase in the Rubycritic score, from `91.56` to `94.04`. The reason for this growth was the separation between the Web and REST API controllers and routes. Before that, both formats were handled by a single controller.
 
-Beyond the code structure, check out the model's implementation to see how the associations reflect the namespace structure.
+This separation of concerns reflects how cohesive each of these contexts has become.
 
-Here is the comparison of the models' directory structure (before and after):
+See how the controllers and views are now organized:
+
+**Controllers**
 
 <table>
   <tr>
-    <th>Before</th>
-    <th>After</th>
+    <th>Web</th>
+    <th>API::V1</th>
   </tr>
   <tr>
     <td>
       <pre>
-app/models
-├── account.rb
-├── application_record.rb
-├── current.rb
-├── membership.rb
-├── task_item.rb
-├── task_list.rb
-├── user.rb
-└── user_token.rb</pre>
+app/controllers/web
+├── base_controller.rb
+├── task
+│  ├── items
+│  │  ├── base_controller.rb
+│  │  ├── complete_controller.rb
+│  │  └── incomplete_controller.rb
+│  ├── items_controller.rb
+│  └── lists_controller.rb
+└── user
+   ├── passwords_controller.rb
+   ├── registrations_controller.rb
+   ├── sessions_controller.rb
+   └── settings
+      ├── profiles_controller.rb
+      └── tokens_controller.rb</pre>
     </td>
     <td>
       <pre>
-app/models
-├── account.rb
-├── application_record.rb
-├── concerns
-├── current.rb
-├── membership.rb
+app/controllers/api
+└── v1
+   ├── base_controller.rb
+   ├── task
+   │  ├── items
+   │  │  ├── base_controller.rb
+   │  │  ├── complete_controller.rb
+   │  │  └── incomplete_controller.rb
+   │  ├── items_controller.rb
+   │  └── lists_controller.rb
+   └── user
+      ├── passwords
+      │  └── resettings_controller.rb
+      ├── passwords_controller.rb
+      ├── registrations_controller.rb
+      ├── sessions_controller.rb
+      └── tokens_controller.rb</pre>
+    </td>
+  </tr>
+</table>
+
+**Views**
+
+<table>
+  <tr>
+    <th>Web</th>
+    <th>API::V1</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+app/views/web
 ├── task
-│  ├── item.rb
-│  └── list.rb
-├── user
-│  └── token.rb
-└── user.rb</pre>
+│  ├── items
+│  │  ├── _form.html.erb
+│  │  ├── actions
+│  │  │  ├── _delete.html.erb
+│  │  │  ├── _edit.html.erb
+│  │  │  └── _toggle_status.html.erb
+│  │  ├── edit.html.erb
+│  │  ├── index.html.erb
+│  │  ├── new.html.erb
+│  │  └── show.html.erb
+│  ├── lists
+│  │  ├── _form.html.erb
+│  │  ├── actions
+│  │  │  ├── _delete.html.erb
+│  │  │  ├── _edit.html.erb
+│  │  │  └── _view_items.html.erb
+│  │  ├── edit.html.erb
+│  │  ├── index.html.erb
+│  │  ├── new.html.erb
+│  │  └── show.html.erb
+│  └── shared
+│     ├── _add_new.html.erb
+│     └── _header.html.erb
+└── user
+   ├── passwords
+   │  ├── edit.html.erb
+   │  └── new.html.erb
+   ├── registrations
+   │  └── new.html.erb
+   ├── sessions
+   │  └── new.html.erb
+   ├── settings
+   │  ├── _header.html.erb
+   │  ├── profiles
+   │  │  └── edit.html.erb
+   │  └── tokens
+   │     └── edit.html.erb
+   └── shared
+      ├── _header.html.erb
+      └── links
+         ├── _reset_password.html.erb
+         ├── _sign_in.html.erb
+         └── _sign_up.html.erb</pre>
+    </td>
+    <td>
+      <pre>
+app/views/api
+└── v1
+   ├── errors
+   │  ├── _response.json.jbuilder
+   │  ├── from_model.json.jbuilder
+   │  ├── response.json.jbuilder
+   │  └── unauthorized.json.jbuilder
+   ├── task
+   │  ├── items
+   │  │  ├── _record.json.jbuilder
+   │  │  ├── index.json.jbuilder
+   │  │  └── show.json.jbuilder
+   │  └── lists
+   │     ├── _record.json.jbuilder
+   │     ├── index.json.jbuilder
+   │     └── show.json.jbuilder
+   └── user
+      └── token.json.jbuilder</pre>
     </td>
   </tr>
 </table>
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-Cohesion + consistency = maintainability.
+In addition to the increased cohesion, we can also see each context has the freedom to represent and organize its resources semantically.
+
+For example, the web application uses the profile to update passwords. When we look at this resource, we see `web/user/settings/profiles`. However, the same responsibility was reflected differently in the API: `api/v1/user/passwords`.
+
+_**This was unfeasible with the previous approach!**_
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-Seven iterations have been since version `021-multi-controllers-per-entity_rest_actions_only`, but the Rubycritic score has remained the same (_**91.56**_).
+Apart from adding namespaces, the implementation of models has stayed the same so far.
 
-But what was the reason?
+Although this version improved the Rubycritic score significantly, it introduced duplication in controllers.
 
-The same controllers handle both the web application and the REST API. In other words, there needs to be more cohesion since each request format serves different purposes.
+The next version will remove this duplication by concentrating logic in models.
 
-Because of this, the next version will perform this separation, and with this, it will be possible to determine whether or not this care in promoting cohesion will improve the quality score.
-
-`Next version`: [050-separation-of-entry-points](https://github.com/solid-process/rails-way-app/tree/050-separation-of-entry-points?tab=readme-ov-file).
+`Next version`: [051-separation-of-entry-points_fat-models](https://github.com/solid-process/rails-way-app/tree/051-separation-of-entry-points_fat-models?tab=readme-ov-file).
 
 ## 📣 Important info
 

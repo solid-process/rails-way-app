@@ -8,7 +8,7 @@ class APIV1TaskItemsDestroyTest < ActionDispatch::IntegrationTest
     task = task_items(:one)
     headers = [ {}, api_v1_helper.authorization_header(SecureRandom.hex(20)) ].sample
 
-    delete(api_v1_helper.task__item_url(member!(user).inbox, task, format: :json), headers:)
+    delete(api_v1_helper.task__item_url(member!(user).inbox, task), headers:)
 
     api_v1_helper.assert_response_with_error(:unauthorized)
   end
@@ -17,7 +17,7 @@ class APIV1TaskItemsDestroyTest < ActionDispatch::IntegrationTest
     user = users(:one)
     task = task_items(:one)
 
-    url = api_v1_helper.task__item_url(Task::List.maximum(:id) + 1, task.id, format: :json)
+    url = api_v1_helper.task__item_url(Task::List.maximum(:id) + 1, task.id)
 
     delete(url, headers: api_v1_helper.authorization_header(user))
 
@@ -27,7 +27,7 @@ class APIV1TaskItemsDestroyTest < ActionDispatch::IntegrationTest
   test "#destroy responds with 404 when task is not found" do
     user = users(:one)
 
-    url = api_v1_helper.task__item_url(member!(user).inbox, Task::Item.maximum(:id) + 1, format: :json)
+    url = api_v1_helper.task__item_url(member!(user).inbox, Task::Item.maximum(:id) + 1)
 
     delete(url, headers: api_v1_helper.authorization_header(user))
 
@@ -38,7 +38,7 @@ class APIV1TaskItemsDestroyTest < ActionDispatch::IntegrationTest
     user = users(:one)
     task = task_items(:two)
 
-    delete(api_v1_helper.task__item_url(task.list, task, format: :json), headers: api_v1_helper.authorization_header(user))
+    delete(api_v1_helper.task__item_url(task.list, task), headers: api_v1_helper.authorization_header(user))
 
     api_v1_helper.assert_response_with_error(:not_found)
   end
@@ -49,7 +49,7 @@ class APIV1TaskItemsDestroyTest < ActionDispatch::IntegrationTest
 
     assert_difference -> { member!(user).inbox.items.count }, -1 do
       delete(
-        api_v1_helper.task__item_url(member!(user).inbox, task, format: :json),
+        api_v1_helper.task__item_url(member!(user).inbox, task),
         headers: api_v1_helper.authorization_header(user)
       )
     end

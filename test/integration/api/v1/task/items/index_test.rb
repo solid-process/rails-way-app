@@ -6,7 +6,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
   test "#index responds with 401 when API token is invalid" do
     headers = [ {}, api_v1_helper.authorization_header(SecureRandom.hex(20)) ].sample
 
-    get(api_v1_helper.task__items_url(Task::List.inbox.first, format: :json), headers:)
+    get(api_v1_helper.task__items_url(Task::List.inbox.first), headers:)
 
     api_v1_helper.assert_response_with_error(:unauthorized)
   end
@@ -15,7 +15,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
     user = users(:one)
 
     get(
-      api_v1_helper.task__items_url(member!(user).task_lists.maximum(:id) + 1, format: :json),
+      api_v1_helper.task__items_url(member!(user).task_lists.maximum(:id) + 1),
       headers: api_v1_helper.authorization_header(user)
     )
 
@@ -26,7 +26,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
     user = users(:one)
 
     get(
-      api_v1_helper.task__items_url(member!(users(:two)).inbox, format: :json),
+      api_v1_helper.task__items_url(member!(users(:two)).inbox),
       headers: api_v1_helper.authorization_header(user)
     )
 
@@ -41,7 +41,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
     task2.update_column(:completed_at, Time.current)
 
     get(
-      api_v1_helper.task__items_url(member!(user).inbox, format: :json),
+      api_v1_helper.task__items_url(member!(user).inbox),
       headers: api_v1_helper.authorization_header(user)
     )
 
@@ -61,7 +61,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
     task = create_task(user, name: "Foo", completed: true)
 
     get(
-      api_v1_helper.task__items_url(member!(user).inbox, filter: "completed", format: :json),
+      api_v1_helper.task__items_url(member!(user).inbox, filter: "completed"),
       headers: api_v1_helper.authorization_header(user)
     )
 
@@ -80,7 +80,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
     task2.update_column(:completed_at, Time.current)
 
     get(
-      api_v1_helper.task__items_url(member!(user).inbox, filter: "incomplete", format: :json),
+      api_v1_helper.task__items_url(member!(user).inbox, filter: "incomplete"),
       headers: api_v1_helper.authorization_header(user)
     )
 
