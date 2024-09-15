@@ -16,33 +16,26 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>061-domain-model_user-token-poro</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1519</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>95.68</td></tr>
+  <tr><td><strong>Branch</strong></td><td>062-domain-model_task-constants</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1526</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>95.78</td></tr>
 </table>
 
-This branch introduces a **PORO** (Plain Old Ruby Objects) to handle the user token parsing, generation, and validation.
+This branch continues to enrich the domain model with a simple change. It ensures that the strings "completed" and "incomplete" are transformed into constants, `Task::COMPLETED` and `Task::INCOMPLETE`.
 
-But wait, is this a good practice? Yes, it is. Extracting complex logic from `ActiveRecord` models is a common pattern. It is a recommendation present in the Rails documentation since version 3.1.0 ([released in 2011](https://github.com/rails/rails/tree/v3.1.0)).
-
-> The _**Model layer**_ represents the domain model (such as Account, Product, Person, Post, etc.) and encapsulates the business logic specific to your application. In Rails, database-backed model classes are derived from `ActiveRecord::Base`. Active Record allows you to present the data from database rows as objects and embellish these data objects with business logic methods.
->
-> Although most Rails models are backed by a database, _**models can also be ordinary Ruby classes, or Ruby classes that implement a set of interfaces as provided by the Active Model module**_.
-
-Let me emphasize this part:
-
-> Models can also be ordinary Ruby classes, or Ruby classes that implement a set of interfaces as provided by
-the Active Model module.
+Note that this change also increases the Rubycritic score from `95.68` to `95.78`.
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-This change matters because it's a good practice to extract complex logic from `ActiveRecord` models. As a result, the Rubycritc score increased again, from `95.63` to `95.68`.
+> Coupling is good when it is stable.
+
+Before this change, breaking the behavior by committing a typo anywhere coupled to these strings would be possible. Now, using constants, we have a single reference for all usage points in the
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-The next version will isolate some strings into constants to reduce codebase duplication and fragility (weak references).
+The next iteration will extract complex operations from the models into specialized POROs.
 
-`Next version`: [062-domain-model_task-constants](https://github.com/solid-process/rails-way-app/tree/062-domain-model_task-constants?tab=readme-ov-file).
+`Next version`: [063-domain-model_user-operations](https://github.com/solid-process/rails-way-app/tree/063-domain-model_user-operations?tab=readme-ov-file).
 
 ## 📣 Important info
 

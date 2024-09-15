@@ -9,8 +9,8 @@ class Task::Item < ApplicationRecord
   scope :incomplete, -> { where(completed_at: nil) }
   scope :filter_by, ->(value) do
     case value
-    when "completed" then completed.order(completed_at: :desc)
-    when "incomplete" then incomplete.order(created_at: :desc)
+    when Task::COMPLETED then completed.order(completed_at: :desc)
+    when Task::INCOMPLETE then incomplete.order(created_at: :desc)
     else order(Arel.sql("task_items.completed_at DESC NULLS FIRST, task_items.created_at DESC"))
     end
   end
