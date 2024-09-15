@@ -12,11 +12,12 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   namespace :user do
-    resource :sessions, only: [ :destroy ]
+    resource :session, only: [ :destroy ]
+    resource :registration, only: [ :destroy ]
+
     resources :sessions, only: [ :new, :create ]
-    resource :registrations, only: [ :destroy ]
-    resources :registrations, only: [ :new, :create ]
     resources :passwords, only: [ :new, :create, :edit, :update ]
+    resources :registrations, only: [ :new, :create ]
 
     namespace :settings do
       resource :profile, only: [ :edit, :update ]

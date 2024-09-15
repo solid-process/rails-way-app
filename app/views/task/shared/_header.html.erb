@@ -17,7 +17,7 @@
       |
       <%= link_to("Settings", edit_user_settings_profile_path) %>
 
-      <%= link_to("Log out", user_sessions_path, data: {turbo_method: :delete}) %>
+      <%= link_to("Log out", user_session_path, data: {turbo_method: :delete}) %>
 
       <%= task_lists_selector if controller_name == "task_items" %>
     </div>

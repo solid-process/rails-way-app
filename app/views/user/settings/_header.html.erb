@@ -10,6 +10,6 @@
 
     <%= link_to("API token", edit_user_settings_token_path, class: current_nav_item?(controller: "tokens")) %>
 
-    <%= link_to("Log out", user_sessions_path, data: {turbo_method: :delete}) %>
+    <%= link_to("Log out", user_session_path, data: {turbo_method: :delete}) %>
   </nav>
 <% end %>

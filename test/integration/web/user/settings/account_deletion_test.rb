@@ -4,7 +4,7 @@ require "test_helper"
 
 class WebUserSettingsAccountDeletionTest < ActionDispatch::IntegrationTest
   test "guest account deletion" do
-    delete(web_helper.user__registrations_url)
+    delete(web_helper.user__registration_url)
 
     web_helper.assert_unauthorized_access
   end
@@ -26,7 +26,7 @@ class WebUserSettingsAccountDeletionTest < ActionDispatch::IntegrationTest
       -> { TaskList.count } => -1,
       -> { UserToken.count } => -1
     ) do
-      delete(web_helper.user__registrations_url)
+      delete(web_helper.user__registration_url)
     end
 
     assert_redirected_to root_url

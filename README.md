@@ -16,70 +16,52 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>034-resources-within-namespaces_nested-namespaces</td></tr>
+  <tr><td><strong>Branch</strong></td><td>035-resources-within-namespaces_singular_resources</td></tr>
   <tr><td><strong>Lines of Code</strong></td><td>1356</td></tr>
   <tr><td><strong>Rubycritic Score</strong></td><td>91.56</td></tr>
 </table>
 
-This version pushes the cohesion further by creating another nested namespace (`User::Settings`).
+The definition of resources in the singular has been present since the first version (`010`).
+
+What this branch does is make the declaration of resources consistent.
 
 <table>
   <tr>
-    <th>Before</th>
-    <th>After</th>
+    <td><strong>Previous</strong></td>
+    <td>
+      <pre>
+           Prefix Verb   URI Pattern                  Controller#Action
+     user_session DELETE /user/session(.:format)      user/sessions#destroy
+user_registration DELETE /user/registration(.:format) user/registrations#destroy</pre>
+    </td>
   </tr>
   <tr>
+    <td><strong>Current</strong></td>
     <td>
       <pre>
-app/views/user
-├── mailers/
-├── passwords/
-├── profiles/
-├── registrations/
-├── sessions/
-├── shared
-│  ├── links
-│  └── settings
-└── tokens
-app/controllers/user
-├── passwords_controller.rb
-├── profiles_controller.rb
-├── registrations_controller.rb
-├── sessions_controller.rb
-└── tokens_controller.rb</pre>
-    </td>
-    <td>
-      <pre>
-app/views/user
-├── mailers/
-├── passwords/
-├── registrations/
-├── sessions/
-├── settings
-│  ├── profiles/
-│  └── tokens/
-└── shared
-   └── links/
-app/controllers/user
-├── passwords_controller.rb
-├── registrations_controller.rb
-├── sessions_controller.rb
-└── settings
-   ├── profiles_controller.rb
-   └── tokens_controller.rb</pre>
+            Prefix Verb   URI Pattern                   Controller#Action
+     user_sessions DELETE /user/sessions(.:format)      user/sessions#destroy
+user_registrations DELETE /user/registrations(.:format) user/registrations#destroy</pre>
     </td>
   </tr>
 </table>
 
-### 🤔 Why is this structure more cohesive than the previous one? <!-- omit in toc -->
+### 🤔 Why does consistency matter? <!-- omit in toc -->
 
-Because all user settings resources are isolated in the same namespace (`User::Settings`), which makes it easier to maintain and understand the codebase.
+> Conceptual Integrity:
+> In 1975, FredBrooks said: I will contend that Conceptual Integrity is the most important consideration in system design. It _**is better**_ to have a system omit certain anomalous features and improvements, but to reflect one set of design ideas, _**than**_ to have one that contains many good but independent and uncoordinated ideas.
+
+Consistency is a key factor in the maintainability of a system. It makes it easier to understand and as a consequence, easier to maintain (promote changes).
+
+This is applicable to everything in the system, from the code to the user interface.
+
+This applies to everything in the system, from the code to the user interface. This branch was added to add this concept to the spotlight.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-Aiming to improve the expressiveness of the application, the next version will make more use of singular resources.
+Aiming to improve the application consistency, the following version groups some models within namespaces.
 
-`Next version`: [035-resources-within-namespaces_singular_resources](https://github.com/solid-process/rails-way-app/tree/035-resources-within-namespaces_singular_resources?tab=readme-ov-file).
+`Next version`: [040-models-within-namespaces](https://github.com/solid-process/rails-way-app/tree/040-models-within-namespaces?tab=readme-ov-file).
 
 ## 📣 Important info
 

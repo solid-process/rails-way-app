@@ -89,9 +89,11 @@ class ActionDispatch::IntegrationTest
       test.assert_select(".notice", "You need to sign in or sign up before continuing.")
     end
 
+    def user__session_url = test.user_session_url
     def user__sessions_url = test.user_sessions_url
     def new_user__session_url = test.new_user_session_url
 
+    def user__registration_url = test.user_registration_url
     def user__registrations_url = test.user_registrations_url
     def new_user__registration_url = test.new_user_registration_url
 
@@ -162,6 +164,7 @@ class ActionDispatch::IntegrationTest
 
     def user__sessions_url = test.user_sessions_url(format: :json)
 
+    def user__registration_url = test.user_registration_url(format: :json)
     def user__registrations_url = test.user_registrations_url(format: :json)
 
     def user__password_url(...) = test.user_password_url(...)

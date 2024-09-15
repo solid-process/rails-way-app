@@ -4,7 +4,7 @@ require "test_helper"
 
 class WebUserSignOutTest < ActionDispatch::IntegrationTest
   test "guest signs out" do
-    delete(web_helper.user__sessions_url)
+    delete(web_helper.user__session_url)
 
     web_helper.assert_unauthorized_access
   end
@@ -14,7 +14,7 @@ class WebUserSignOutTest < ActionDispatch::IntegrationTest
 
     web_helper.sign_in(user)
 
-    delete(web_helper.user__sessions_url)
+    delete(web_helper.user__session_url)
 
     assert_redirected_to web_helper.new_user__session_url
 
