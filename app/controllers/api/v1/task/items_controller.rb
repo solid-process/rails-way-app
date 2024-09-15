@@ -6,14 +6,7 @@ class API::V1::Task::ItemsController < API::V1::Task::Items::BaseController
   before_action :set_task_item, except: %i[index create]
 
   def index
-    task_items = Current.task_items
-
-    @task_items =
-      case params[:filter]
-      when "completed" then task_items.completed.order(completed_at: :desc)
-      when "incomplete" then task_items.incomplete.order(created_at: :desc)
-      else task_items.order(Arel.sql("task_items.completed_at DESC NULLS FIRST, task_items.created_at DESC"))
-      end
+    @task_items = Current.task_items.filter_by(params[:filter])
   end
 
   def show

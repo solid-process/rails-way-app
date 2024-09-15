@@ -16,164 +16,26 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>050-separation-of-entry-points</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1462</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>94.04</td></tr>
+  <tr><td><strong>Branch</strong></td><td>051-separation-of-entry-points_fat-models</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1456</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>95.56</td></tr>
 </table>
 
-This version shows a substantial increase in the Rubycritic score, from `91.56` to `94.04`. The reason for this growth was the separation between the Web and REST API controllers and routes. Before that, both formats were handled by a single controller.
-
-This separation of concerns reflects how cohesive each of these contexts has become.
-
-See how the controllers and views are now organized:
-
-**Controllers**
-
-<table>
-  <tr>
-    <th>Web</th>
-    <th>API::V1</th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-app/controllers/web
-├── base_controller.rb
-├── task
-│  ├── items
-│  │  ├── base_controller.rb
-│  │  ├── complete_controller.rb
-│  │  └── incomplete_controller.rb
-│  ├── items_controller.rb
-│  └── lists_controller.rb
-└── user
-   ├── passwords_controller.rb
-   ├── registrations_controller.rb
-   ├── sessions_controller.rb
-   └── settings
-      ├── profiles_controller.rb
-      └── tokens_controller.rb</pre>
-    </td>
-    <td>
-      <pre>
-app/controllers/api
-└── v1
-   ├── base_controller.rb
-   ├── task
-   │  ├── items
-   │  │  ├── base_controller.rb
-   │  │  ├── complete_controller.rb
-   │  │  └── incomplete_controller.rb
-   │  ├── items_controller.rb
-   │  └── lists_controller.rb
-   └── user
-      ├── passwords
-      │  └── resettings_controller.rb
-      ├── passwords_controller.rb
-      ├── registrations_controller.rb
-      ├── sessions_controller.rb
-      └── tokens_controller.rb</pre>
-    </td>
-  </tr>
-</table>
-
-**Views**
-
-<table>
-  <tr>
-    <th>Web</th>
-    <th>API::V1</th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-app/views/web
-├── task
-│  ├── items
-│  │  ├── _form.html.erb
-│  │  ├── actions
-│  │  │  ├── _delete.html.erb
-│  │  │  ├── _edit.html.erb
-│  │  │  └── _toggle_status.html.erb
-│  │  ├── edit.html.erb
-│  │  ├── index.html.erb
-│  │  ├── new.html.erb
-│  │  └── show.html.erb
-│  ├── lists
-│  │  ├── _form.html.erb
-│  │  ├── actions
-│  │  │  ├── _delete.html.erb
-│  │  │  ├── _edit.html.erb
-│  │  │  └── _view_items.html.erb
-│  │  ├── edit.html.erb
-│  │  ├── index.html.erb
-│  │  ├── new.html.erb
-│  │  └── show.html.erb
-│  └── shared
-│     ├── _add_new.html.erb
-│     └── _header.html.erb
-└── user
-   ├── passwords
-   │  ├── edit.html.erb
-   │  └── new.html.erb
-   ├── registrations
-   │  └── new.html.erb
-   ├── sessions
-   │  └── new.html.erb
-   ├── settings
-   │  ├── _header.html.erb
-   │  ├── profiles
-   │  │  └── edit.html.erb
-   │  └── tokens
-   │     └── edit.html.erb
-   └── shared
-      ├── _header.html.erb
-      └── links
-         ├── _reset_password.html.erb
-         ├── _sign_in.html.erb
-         └── _sign_up.html.erb</pre>
-    </td>
-    <td>
-      <pre>
-app/views/api
-└── v1
-   ├── errors
-   │  ├── _response.json.jbuilder
-   │  ├── from_model.json.jbuilder
-   │  ├── response.json.jbuilder
-   │  └── unauthorized.json.jbuilder
-   ├── task
-   │  ├── items
-   │  │  ├── _record.json.jbuilder
-   │  │  ├── index.json.jbuilder
-   │  │  └── show.json.jbuilder
-   │  └── lists
-   │     ├── _record.json.jbuilder
-   │     ├── index.json.jbuilder
-   │     └── show.json.jbuilder
-   └── user
-      └── token.json.jbuilder</pre>
-    </td>
-  </tr>
-</table>
+This version increases the Rubycritic score from `94.04` to `95.56` by moving the existing duplications to the models, the famous fat models and skinny controllers.
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-In addition to the increased cohesion, we can also see each context has the freedom to represent and organize its resources semantically.
+Because eliminating duplication generally increases maintenance.
 
-For example, the web application uses the profile to update passwords. When we look at this resource, we see `web/user/settings/profiles`. However, the same responsibility was reflected differently in the API: `api/v1/user/passwords`.
+_**But be careful:**_ excessive and indiscriminate use of DRY (Don't Repeat Yourself) can compromise understanding and maintenance.
 
-_**This was unfeasible with the previous approach!**_
+Try to create abstractions only to address real needs (real problems).
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-Apart from adding namespaces, the implementation of models has stayed the same so far.
+In the next version, we will enrich the application's domain model, starting with the Current class, which contains different responsibilities and a higher level of complexity.
 
-Although this version improved the Rubycritic score significantly, it introduced duplication in controllers.
-
-The next version will remove this duplication by concentrating logic in models.
-
-`Next version`: [051-separation-of-entry-points_fat-models](https://github.com/solid-process/rails-way-app/tree/051-separation-of-entry-points_fat-models?tab=readme-ov-file).
+`Next version`: [060-domain-model_account-member-poro](https://github.com/solid-process/rails-way-app/tree/060-domain-model_account-member-poro?tab=readme-ov-file).
 
 ## 📣 Important info
 

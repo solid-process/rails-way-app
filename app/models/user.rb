@@ -50,4 +50,19 @@ class User < ApplicationRecord
   before_destroy prepend: true do
     account.destroy!
   end
+
+  def self.send_reset_password_instructions(email:)
+    user = find_by(email:)
+
+    return unless user
+
+    UserMailer.with(
+      user:,
+      token: user.generate_token_for(:reset_password)
+    ).reset_password.deliver_later
+  end
+
+  def self.find_by_reset_password(token:)
+    find_by_token_for(:reset_password, token)
+  end
 end
