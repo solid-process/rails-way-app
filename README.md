@@ -16,26 +16,33 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>060-domain-model_account-member-poro</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1504</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>95.63</td></tr>
+  <tr><td><strong>Branch</strong></td><td>061-domain-model_user-token-poro</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1519</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>95.68</td></tr>
 </table>
 
-The `Current` class had two responsibilities: containing thread-safe shared state and queries to authorize user access.
+This branch introduces a **PORO** (Plain Old Ruby Objects) to handle the user token parsing, generation, and validation.
 
-This branch separates these responsibilities, keeping the primary scope of the `Current` class (containing thread-safe and shareable state) but moving the authorization responsibility to the `Account::Member` and `Account::Member::Authorization` POROS (Plain Old Ruby Objects).
+But wait, is this a good practice? Yes, it is. Extracting complex logic from `ActiveRecord` models is a common pattern. It is a recommendation present in the Rails documentation since version 3.1.0 ([released in 2011](https://github.com/rails/rails/tree/v3.1.0)).
 
-POROS means a model that doesn't inherit from `ActiveRecord`, and it's a common pattern to extract complex logic from `ActiveRecord` models.
+> The _**Model layer**_ represents the domain model (such as Account, Product, Person, Post, etc.) and encapsulates the business logic specific to your application. In Rails, database-backed model classes are derived from `ActiveRecord::Base`. Active Record allows you to present the data from database rows as objects and embellish these data objects with business logic methods.
+>
+> Although most Rails models are backed by a database, _**models can also be ordinary Ruby classes, or Ruby classes that implement a set of interfaces as provided by the Active Model module**_.
+
+Let me emphasize this part:
+
+> Models can also be ordinary Ruby classes, or Ruby classes that implement a set of interfaces as provided by
+the Active Model module.
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-Cohesion + Separation of Concerns = Better understanding, maintainability and testability.
+This change matters because it's a good practice to extract complex logic from `ActiveRecord` models. As a result, the Rubycritc score increased again, from `95.63` to `95.68`.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-In the next version, we will enrich the application's domain model, starting with the Current class, which contains different responsibilities and a higher level of complexity.
+The next version will isolate some strings into constants to reduce codebase duplication and fragility (weak references).
 
-`Next version`: [061-domain-model_user-token-poro](https://github.com/solid-process/rails-way-app/tree/061-domain-model_user-token-poro?tab=readme-ov-file).
+`Next version`: [062-domain-model_task-constants](https://github.com/solid-process/rails-way-app/tree/062-domain-model_task-constants?tab=readme-ov-file).
 
 ## 📣 Important info
 
