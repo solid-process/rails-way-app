@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
+  default template_path: "user/mailers"
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
