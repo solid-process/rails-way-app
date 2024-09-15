@@ -4,7 +4,9 @@ class API::V1::User::Passwords::ResettingsController < API::V1::BaseController
   before_action :set_user_by_token, only: %i[update]
 
   def create
-    User.send_reset_password_instructions(email: params.require(:user).require(:email))
+    User::PasswordResetting
+      .new(email: params.require(:user).require(:email))
+      .send_instructions
 
     render(status: :ok, json: { status: :success })
   end

@@ -4,17 +4,18 @@ class API::V1::User::RegistrationsController < API::V1::BaseController
   before_action :authenticate_user!, only: %i[destroy]
 
   def create
-    @user = User.new(user_params)
+    case User::Registration.new(user_params).process
+    in { user: } if user.errors.empty?
+      @user = user
 
-    if @user.save
       render "api/v1/user/token", status: :created
-    else
-      render("api/v1/errors/from_model", status: :unprocessable_entity, locals: { model: @user })
+    in { user: }
+      render("api/v1/errors/from_model", status: :unprocessable_entity, locals: { model: user })
     end
   end
 
   def destroy
-    Current.user.destroy!
+    User::AccountDeletion.new.process
 
     head :no_content
   end

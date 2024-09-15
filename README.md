@@ -16,26 +16,43 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>062-domain-model_task-constants</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1526</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>95.78</td></tr>
+  <tr><td><strong>Branch</strong></td><td>063-domain-model_user-operations</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1563</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>95.77</td></tr>
 </table>
 
-This branch continues to enrich the domain model with a simple change. It ensures that the strings "completed" and "incomplete" are transformed into constants, `Task::COMPLETED` and `Task::INCOMPLETE`.
+This version isolates some user operations into specialized POROs (1). The goal here is to reduce the model's complexity.
 
-Note that this change also increases the Rubycritic score from `95.68` to `95.78`.
+Here's how the models are organized:
+
+```sh
+app/models
+├── user
+│  ├── account_deletion.rb
+│  ├── password_resetting.rb
+│  ├── registration.rb
+│  ├── token
+│  │  └── entity.rb
+│  └── token.rb
+└── user.rb
+```
+
+*References:*
+(1) https://dev.37signals.com/vanilla-rails-is-plenty/#what-about-services
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-> Coupling is good when it is stable.
+Can you imagine a model with hundreds of lines of code? It's hard to maintain, right? By isolating some operations into specialized POROs, we can reduce the complexity and make things easier to maintain.
 
-Before this change, breaking the behavior by committing a typo anywhere coupled to these strings would be possible. Now, using constants, we have a single reference for all usage points in the
+Beyond this, did you see that the file and folder structure reveals the domain model and what kind of operations that context can do?
+
+This approach can distribute the complexity over specialized classes and, as a side effect, increase the codebase's understandability.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-The next iteration will extract complex operations from the models into specialized POROs.
+The next iteration will define the account context and decouple the user model from it to make the codebase even more orthogonal (orthogonality = the ability to change one thing without any unseen effect on other things).
 
-`Next version`: [063-domain-model_user-operations](https://github.com/solid-process/rails-way-app/tree/063-domain-model_user-operations?tab=readme-ov-file).
+`Next version`: [070-orthogonal-models](https://github.com/solid-process/rails-way-app/tree/070-orthogonal-models?tab=readme-ov-file).
 
 ## 📣 Important info
 

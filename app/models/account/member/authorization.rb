@@ -35,10 +35,10 @@ class Account::Member::Authorization
   end
 
   def users_left_joins
-    task_list_assignment = member.task_list_id ? [ "id = ?", member.task_list_id ] : "inbox = TRUE"
+    task_list_assignment = member.task_list_id? ? [ "id = ?", member.task_list_id ] : "inbox = TRUE"
     task_lists_condition = "task_lists.#{sanitize_sql_for_assignment(task_list_assignment)}"
 
-    membership_assignment = sanitize_sql_for_assignment([ "account_id = ?", member.account_id ]) if member.account_id
+    membership_assignment = sanitize_sql_for_assignment([ "account_id = ?", member.account_id ]) if member.account_id?
     memberships_condition = "AND memberships.#{membership_assignment}" if membership_assignment
 
     User

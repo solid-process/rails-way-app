@@ -11,9 +11,9 @@ class Web::User::RegistrationsController < Web::BaseController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User::Registration.new(user_params).process.fetch(:user)
 
-    if @user.save
+    if @user.errors.empty?
       sign_in(@user)
 
       redirect_to task_list_items_path(Current.task_list_id), notice: "You have successfully registered!"
@@ -23,7 +23,7 @@ class Web::User::RegistrationsController < Web::BaseController
   end
 
   def destroy
-    Current.user.destroy!
+    User::AccountDeletion.new.process
 
     sign_out
 

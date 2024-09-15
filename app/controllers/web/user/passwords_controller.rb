@@ -9,7 +9,9 @@ class Web::User::PasswordsController < Web::BaseController
   end
 
   def create
-    User.send_reset_password_instructions(email: params.require(:user).require(:email))
+    User::PasswordResetting
+      .new(email: params.require(:user).require(:email))
+      .send_instructions
 
     redirect_to new_user_session_path, notice: "Check your email to reset your password."
   end
