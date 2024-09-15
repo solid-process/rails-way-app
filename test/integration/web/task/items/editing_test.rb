@@ -24,7 +24,7 @@ class WebTaskItemsEditingTest < ActionDispatch::IntegrationTest
 
     web_helper.sign_in(user)
 
-    put(web_helper.task__item_url(task.task_list, task), params: { task_item: { name: "Foo" } })
+    put(web_helper.task__item_url(task.list, task), params: { task_item: { name: "Foo" } })
 
     assert_response :not_found
   end
@@ -35,7 +35,7 @@ class WebTaskItemsEditingTest < ActionDispatch::IntegrationTest
 
     web_helper.sign_in(user)
 
-    get(web_helper.edit_task__item_url(task.task_list, task))
+    get(web_helper.edit_task__item_url(task.list, task))
 
     assert_response :ok
 
@@ -60,7 +60,7 @@ class WebTaskItemsEditingTest < ActionDispatch::IntegrationTest
 
     assert_select("td", /Bar/)
 
-    get(web_helper.edit_task__item_url(task.task_list, task))
+    get(web_helper.edit_task__item_url(task.list, task))
 
     assert_select("input[type=\"checkbox\"][checked]")
   end
@@ -71,7 +71,7 @@ class WebTaskItemsEditingTest < ActionDispatch::IntegrationTest
 
     web_helper.sign_in(user)
 
-    put(web_helper.task__item_url(task.task_list, task), params: { task_item: { name: "" } })
+    put(web_helper.task__item_url(task.list, task), params: { task_item: { name: "" } })
 
     assert_response :unprocessable_entity
 

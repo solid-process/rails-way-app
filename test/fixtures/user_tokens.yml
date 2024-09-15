@@ -1,4 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+_fixture:
+  model_class: User::Token
 
 one: # "Bh3ok8BL_XTNYFvwaRATjSoS3o5zjeQ4gWpQuUjd3"
   user: one

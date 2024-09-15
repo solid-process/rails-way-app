@@ -24,9 +24,9 @@ class WebUserSettingsTokenRefreshingTest < ActionDispatch::IntegrationTest
 
     assert_select("h2", "API token")
 
-    assert_select("pre", user.user_token.value)
+    assert_select("pre", user.token.value)
 
-    assert_changes -> { user.user_token.reload.value } do
+    assert_changes -> { user.token.reload.value } do
       put(web_helper.user__tokens_url)
     end
 
@@ -36,6 +36,6 @@ class WebUserSettingsTokenRefreshingTest < ActionDispatch::IntegrationTest
 
     assert_select(".notice", "API token updated.")
 
-    assert_select("pre", /#{user.user_token.short}_.{32}/)
+    assert_select("pre", /#{user.token.short}_.{32}/)
   end
 end

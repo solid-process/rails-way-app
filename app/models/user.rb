@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_one :account, through: :ownership
   has_one :inbox, through: :account
 
-  has_one :user_token, dependent: :destroy
+  has_one :token, dependent: :destroy
 
   with_options presence: true do
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
     account.task_lists.inbox.create!
 
-    create_user_token!
+    create_token!
   end
 
   after_create_commit do

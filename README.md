@@ -16,52 +16,68 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>035-resources-within-namespaces_singular_resources</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1356</td></tr>
+  <tr><td><strong>Branch</strong></td><td>040-models-within-namespaces</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1359</td></tr>
   <tr><td><strong>Rubycritic Score</strong></td><td>91.56</td></tr>
 </table>
 
-The definition of resources in the singular has been present since the first version (`010`).
+The previous versions already showed the benefits of organizing the codebase. This version goes further by grouping models within namespaces.
 
-What this branch does is make the declaration of resources consistent.
+Beyond the code structure, check out the model's implementation to see how the associations reflect the namespace structure.
+
+Here is the comparison of the models' directory structure (before and after):
 
 <table>
   <tr>
-    <td><strong>Previous</strong></td>
-    <td>
-      <pre>
-           Prefix Verb   URI Pattern                  Controller#Action
-     user_session DELETE /user/session(.:format)      user/sessions#destroy
-user_registration DELETE /user/registration(.:format) user/registrations#destroy</pre>
-    </td>
+    <th>Before</th>
+    <th>After</th>
   </tr>
   <tr>
-    <td><strong>Current</strong></td>
     <td>
       <pre>
-            Prefix Verb   URI Pattern                   Controller#Action
-     user_sessions DELETE /user/sessions(.:format)      user/sessions#destroy
-user_registrations DELETE /user/registrations(.:format) user/registrations#destroy</pre>
+app/models
+├── account.rb
+├── application_record.rb
+├── current.rb
+├── membership.rb
+├── task_item.rb
+├── task_list.rb
+├── user.rb
+└── user_token.rb</pre>
+    </td>
+    <td>
+      <pre>
+app/models
+├── account.rb
+├── application_record.rb
+├── concerns
+├── current.rb
+├── membership.rb
+├── task
+│  ├── item.rb
+│  └── list.rb
+├── user
+│  └── token.rb
+└── user.rb</pre>
     </td>
   </tr>
 </table>
 
-### 🤔 Why does consistency matter? <!-- omit in toc -->
+### 🤔 Why this change matter? <!-- omit in toc -->
 
-> Conceptual Integrity:
-> In 1975, FredBrooks said: I will contend that Conceptual Integrity is the most important consideration in system design. It _**is better**_ to have a system omit certain anomalous features and improvements, but to reflect one set of design ideas, _**than**_ to have one that contains many good but independent and uncoordinated ideas.
-
-Consistency is a key factor in the maintainability of a system. It makes it easier to understand and as a consequence, easier to maintain (promote changes).
-
-This is applicable to everything in the system, from the code to the user interface.
-
-This applies to everything in the system, from the code to the user interface. This branch was added to add this concept to the spotlight.
+Cohesion + consistency = maintainability.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-Aiming to improve the application consistency, the following version groups some models within namespaces.
+Seven iterations have been since version `021-multi-controllers-per-entity_rest_actions_only`, but the Rubycritic score has remained the same (_**91.56**_).
 
-`Next version`: [040-models-within-namespaces](https://github.com/solid-process/rails-way-app/tree/040-models-within-namespaces?tab=readme-ov-file).
+But what was the reason?
+
+The same controllers handle both the web application and the REST API. In other words, there needs to be more cohesion since each request format serves different purposes.
+
+Because of this, the next version will perform this separation, and with this, it will be possible to determine whether or not this care in promoting cohesion will improve the quality score.
+
+`Next version`: [050-separation-of-entry-points](https://github.com/solid-process/rails-way-app/tree/050-separation-of-entry-points?tab=readme-ov-file).
 
 ## 📣 Important info
 

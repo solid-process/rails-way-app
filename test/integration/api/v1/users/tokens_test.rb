@@ -14,13 +14,13 @@ class APIV1UserTokensTest < ActionDispatch::IntegrationTest
   test "#update refreshes user API token and responds with 200" do
     user = users(:one)
 
-    assert_changes -> { user.user_token.reload.value } do
+    assert_changes -> { user.token.reload.value } do
       put(api_v1_helper.user__tokens_url, headers: api_v1_helper.authorization_header(user))
     end
 
     json_data = api_v1_helper.assert_response_with_success(:ok)
 
-    assert_equal 8, user.user_token.short.size
-    assert_equal user.user_token.short, json_data["user_token"].split("_").first
+    assert_equal 8, user.token.short.size
+    assert_equal user.token.short, json_data["user_token"].split("_").first
   end
 end

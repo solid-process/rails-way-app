@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class TaskItem < ApplicationRecord
-  belongs_to :task_list
+class Task::Item < ApplicationRecord
+  self.table_name = "task_items"
+
+  belongs_to :list, foreign_key: "task_list_id"
 
   scope :completed, -> { where.not(completed_at: nil) }
   scope :incomplete, -> { where(completed_at: nil) }

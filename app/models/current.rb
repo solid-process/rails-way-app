@@ -13,7 +13,7 @@ class Current < ActiveSupport::CurrentAttributes
     self.task_list_id = user&.member_task_list_id
 
     self.account = user&.accounts&.find_by(id: account_id)
-    self.task_lists = account&.task_lists || TaskList.none
+    self.task_lists = account&.task_lists || Task::List.none
     self.task_list = task_lists.find_by(id: task_list_id)
   end
 
@@ -34,7 +34,7 @@ class Current < ActiveSupport::CurrentAttributes
   def task_list? = task_list.present?
 
   def task_items
-    task_list&.task_items || TaskItem.none
+    task_list&.items || Task::Item.none
   end
 
   private
@@ -57,11 +57,11 @@ class Current < ActiveSupport::CurrentAttributes
   def users_relation
     return users_left_joins.where(users: { id: user_id }) if user_id
 
-    short, long = UserToken.parse_value(user_token)
+    short, long = User::Token.parse_value(user_token)
 
-    checksum = UserToken.checksum(short:, long:)
+    checksum = User::Token.checksum(short:, long:)
 
-    users_left_joins.joins(:user_token).where(user_tokens: { short:, checksum: })
+    users_left_joins.joins(:token).where(user_tokens: { short:, checksum: })
   end
 
   def users_left_joins

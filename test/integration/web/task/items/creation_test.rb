@@ -26,7 +26,7 @@ class WebTaskItemsCreationTest < ActionDispatch::IntegrationTest
 
     assert_select("h2", "New task item")
 
-    assert_difference(-> { member!(user).inbox.task_items.count }) do
+    assert_difference(-> { member!(user).inbox.items.count }) do
       post(web_helper.task__items_url(member!(user).inbox), params: { task_item: { name: "Bar" } })
     end
 
@@ -48,7 +48,7 @@ class WebTaskItemsCreationTest < ActionDispatch::IntegrationTest
 
     web_helper.sign_in(user)
 
-    assert_no_difference(-> { member!(user).inbox.task_items.count }) do
+    assert_no_difference(-> { member!(user).inbox.items.count }) do
       post(web_helper.task__items_url(member!(user).inbox), params: { task_item: { name: "" } })
     end
 

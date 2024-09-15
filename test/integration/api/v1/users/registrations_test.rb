@@ -62,8 +62,8 @@ class APIV1UserRegistrationsTest < ActionDispatch::IntegrationTest
       -> { User.count } => 1,
       -> { Account.count } => 1,
       -> { Membership.count } => 1,
-      -> { TaskList.count } => 1,
-      -> { UserToken.count } => 1
+      -> { Task::List.count } => 1,
+      -> { User::Token.count } => 1
     ) do
       post(api_v1_helper.user__registrations_url, params:)
     end
@@ -71,7 +71,7 @@ class APIV1UserRegistrationsTest < ActionDispatch::IntegrationTest
     json_data = api_v1_helper.assert_response_with_success(:created)
 
     assert_equal(
-      User.find_by(email: params[:user][:email]).user_token.short,
+      User.find_by(email: params[:user][:email]).token.short,
       json_data["user_token"].split("_").first
     )
   end
@@ -91,8 +91,8 @@ class APIV1UserRegistrationsTest < ActionDispatch::IntegrationTest
       -> { User.count } => -1,
       -> { Account.count } => -1,
       -> { Membership.count } => -1,
-      -> { TaskList.count } => -1,
-      -> { UserToken.count } => -1
+      -> { Task::List.count } => -1,
+      -> { User::Token.count } => -1
     ) do
       delete(api_v1_helper.user__registration_url, headers: api_v1_helper.authorization_header(user))
     end

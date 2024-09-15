@@ -1,13 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+_fixture:
+  model_class: Task::Item
 
 one:
+  list: one_inbox
   name: Learn how to extract the best from Ruby
   description: Ruby is a great language
-  task_list: one_inbox
   completed_at:
 
 two:
+  list: two_inbox
   name: Learn how to extract the best from Ruby on Rails
   description: Ruby on Rails is a great framework
-  task_list: two_inbox
   completed_at:

@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-class TaskList < ApplicationRecord
+class Task::List < ApplicationRecord
+  self.table_name = "task_lists"
+
   belongs_to :account
 
-  has_many :task_items, dependent: :destroy
+  has_many :items, dependent: :destroy, foreign_key: "task_list_id"
 
   scope :inbox, -> { where(inbox: true) }
 

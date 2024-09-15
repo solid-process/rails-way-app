@@ -44,7 +44,7 @@ module ActiveSupport
     end
 
     def create_task(user, name: "Foo", completed: false, task_list: member!(user).inbox)
-      task = task_list.task_items.create!(name:)
+      task = task_list.items.create!(name:)
 
       completed ? complete_task(task) : task
     end

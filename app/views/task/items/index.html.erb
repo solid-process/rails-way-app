@@ -1,6 +1,6 @@
 <%= render("task/shared/header") %>
 
-<% if Current.task_list.task_items.exists? %>
+<% if Current.task_list.items.exists? %>
   <p style="text-align: center"><strong>Filter:</strong> <%= link_to_task_item_filters %></p>
 
   <% if @task_items.present? %>

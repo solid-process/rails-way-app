@@ -6,7 +6,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
   test "#index responds with 401 when API token is invalid" do
     headers = [ {}, api_v1_helper.authorization_header(SecureRandom.hex(20)) ].sample
 
-    get(api_v1_helper.task__items_url(TaskList.inbox.first, format: :json), headers:)
+    get(api_v1_helper.task__items_url(Task::List.inbox.first, format: :json), headers:)
 
     api_v1_helper.assert_response_with_error(:unauthorized)
   end
@@ -36,7 +36,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
   test "#index responds with 200" do
     user = users(:one)
 
-    task1 = member!(user).inbox.task_items.first
+    task1 = member!(user).inbox.items.first
     task2 = create_task(user, name: "Foo")
     task2.update_column(:completed_at, Time.current)
 
@@ -75,7 +75,7 @@ class APIV1TaskItemsIndexTest < ActionDispatch::IntegrationTest
   test "#index responds with 200 when filtering by incomplete" do
     user = users(:one)
 
-    task1 = member!(user).inbox.task_items.first
+    task1 = member!(user).inbox.items.first
     task2 = create_task(user, name: "Foo")
     task2.update_column(:completed_at, Time.current)
 

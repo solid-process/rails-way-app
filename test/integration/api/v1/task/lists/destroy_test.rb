@@ -14,7 +14,7 @@ class APIV1TaskListsDestroyTest < ActionDispatch::IntegrationTest
   test "#destroy responds with 404 when task list is not found" do
     user = users(:one)
 
-    delete(api_v1_helper.task__list_url(TaskList.maximum(:id) + 1, format: :json), headers: api_v1_helper.authorization_header(user))
+    delete(api_v1_helper.task__list_url(Task::List.maximum(:id) + 1, format: :json), headers: api_v1_helper.authorization_header(user))
 
     assert_response :not_found
   end
