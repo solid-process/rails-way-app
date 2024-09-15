@@ -55,10 +55,10 @@ class ApplicationController < ActionController::Base
   def current_member!
     if request.format.json?
       authenticate_with_http_token do |user_token|
-        Current.member!(user_token:, task_list_id: params[:task_list_id])
+        Current.member!(user_token:, task_list_id: params[:list_id])
       end
     else
-      task_list_id = params[:task_list_id]
+      task_list_id = params[:list_id]
       task_list_id = current_task_list_id if task_list_id.blank?
 
       Current.member!(user_id: current_user_id, task_list_id:)

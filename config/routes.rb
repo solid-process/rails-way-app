@@ -11,20 +11,26 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  resource :user_sessions, only: [ :destroy ]
-  resources :user_sessions, only: [ :new, :create ]
-  resource :user_registrations, only: [ :destroy ]
-  resources :user_registrations, only: [ :new, :create ]
-  resources :user_passwords, only: [ :new, :create, :edit, :update ]
-  resource :user_profiles, only: [ :edit, :update ]
-  resource :user_tokens, only: [ :edit, :update ]
+  namespace :user do
+    resource :sessions, only: [ :destroy ]
+    resources :sessions, only: [ :new, :create ]
+    resource :registrations, only: [ :destroy ]
+    resources :registrations, only: [ :new, :create ]
+    resources :passwords, only: [ :new, :create, :edit, :update ]
+    resource :profiles, only: [ :edit, :update ]
+    resource :tokens, only: [ :edit, :update ]
+  end
 
-  resources :task_lists do
-    resources :task_items
-    resources :complete_task_items, only: [ :update ]
-    resources :incomplete_task_items, only: [ :update ]
+  namespace :task do
+    resources :lists do
+      resources :items
+      namespace :items do
+        resources :complete, only: [ :update ]
+        resources :incomplete, only: [ :update ]
+      end
+    end
   end
 
   # Defines the root path route ("/")
-  root "user_sessions#new"
+  root "user/sessions#new"
 end

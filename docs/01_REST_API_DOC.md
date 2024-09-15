@@ -49,7 +49,7 @@ You can get the `API_TOKEN` by:
 #### Registration
 
 ```bash
-curl -X POST "$API_HOST/user_registrations" \
+curl -X POST "$API_HOST/user/registrations" \
   -H "Content-Type: application/json" \
   -d '{
     "user": {
@@ -65,7 +65,7 @@ curl -X POST "$API_HOST/user_registrations" \
 #### Authentication
 
 ```bash
-curl -X POST "$API_HOST/user_sessions" \
+curl -X POST "$API_HOST/user/sessions" \
   -H "Content-Type: application/json" \
   -d '{
     "user": {
@@ -80,7 +80,7 @@ curl -X POST "$API_HOST/user_sessions" \
 #### Account deletion
 
 ```bash
-curl -X DELETE "$API_HOST/user_registrations" \
+curl -X DELETE "$API_HOST/user/registrations" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -90,7 +90,7 @@ curl -X DELETE "$API_HOST/user_registrations" \
 #### API token updating
 
 ```bash
-curl -X PUT "$API_HOST/user_tokens" \
+curl -X PUT "$API_HOST/user/tokens" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -100,7 +100,7 @@ curl -X PUT "$API_HOST/user_tokens" \
 #### Password updating
 
 ```bash
-curl -X PUT "$API_HOST/user_profiles" \
+curl -X PUT "$API_HOST/user/profiles" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   -d '{
@@ -117,7 +117,7 @@ curl -X PUT "$API_HOST/user_profiles" \
 #### Password resetting - Link to change the password
 
 ```bash
-curl -X POST "$API_HOST/user_passwords" \
+curl -X POST "$API_HOST/user/passwords" \
   -H "Content-Type: application/json" \
   -d '{"user": {"email": "email@example.com"}}'
 ```
@@ -127,7 +127,7 @@ curl -X POST "$API_HOST/user_passwords" \
 #### Password resetting - Change the password
 
 ```bash
-curl -X PUT "$API_HOST/user_passwords/TOKEN_RETRIEVED_BY_EMAIL" \
+curl -X PUT "$API_HOST/user/passwords/TOKEN_RETRIEVED_BY_EMAIL" \
   -H "Content-Type: application/json" \
   -d '{
     "user": {
@@ -144,7 +144,7 @@ curl -X PUT "$API_HOST/user_passwords/TOKEN_RETRIEVED_BY_EMAIL" \
 #### Listing
 
 ```bash
-curl -X GET "$API_HOST/task_lists" \
+curl -X GET "$API_HOST/task/lists" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -154,7 +154,7 @@ curl -X GET "$API_HOST/task_lists" \
 #### Creation
 
 ```bash
-curl -X POST "$API_HOST/task_lists" \
+curl -X POST "$API_HOST/task/lists" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   -d '{"task_list": {"name": "My Task List"}}'
@@ -165,7 +165,7 @@ curl -X POST "$API_HOST/task_lists" \
 #### Updating
 
 ```bash
-curl -X PUT "$API_HOST/task_lists/2" \
+curl -X PUT "$API_HOST/task/lists/2" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   -d '{"task_list": {"name": "My List"}}'
@@ -176,7 +176,7 @@ curl -X PUT "$API_HOST/task_lists/2" \
 #### Deletion
 
 ```bash
-curl -X DELETE "$API_HOST/task_lists/2" \
+curl -X DELETE "$API_HOST/task/lists/2" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -190,7 +190,7 @@ curl -X DELETE "$API_HOST/task_lists/2" \
 ```bash
 # ?filter=completed | incomplete
 
-curl -X GET "$API_HOST/task_lists/1/task_items" \
+curl -X GET "$API_HOST/task/lists/1/items" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -200,7 +200,7 @@ curl -X GET "$API_HOST/task_lists/1/task_items" \
 #### Creation
 
 ```bash
-curl -X POST "$API_HOST/task_lists/1/task_items" \
+curl -X POST "$API_HOST/task/lists/1/items" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   -d '{"task_item": {"name": "My Task"}}'
@@ -213,7 +213,7 @@ curl -X POST "$API_HOST/task_lists/1/task_items" \
 ```bash
 # "completed": true | 1 | false | 0
 
-curl -X PUT "$API_HOST/task_lists/1/task_items/1" \
+curl -X PUT "$API_HOST/task/lists/1/items/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   -d '{"task_item": {"name": "My Task", "completed": true}}'
@@ -224,7 +224,7 @@ curl -X PUT "$API_HOST/task_lists/1/task_items/1" \
 #### Marking as incomplete
 
 ```bash
-curl -X PUT "$API_HOST/task_lists/1/incomplete_task_items/1" \
+curl -X PUT "$API_HOST/task/lists/1/items/incomplete/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -232,7 +232,7 @@ curl -X PUT "$API_HOST/task_lists/1/incomplete_task_items/1" \
 #### Marking as completed
 
 ```bash
-curl -X PUT "$API_HOST/task_lists/1/complete_task_items/1" \
+curl -X PUT "$API_HOST/task/lists/1/items/complete/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -242,7 +242,7 @@ curl -X PUT "$API_HOST/task_lists/1/complete_task_items/1" \
 #### Deletion
 
 ```bash
-curl -X DELETE "$API_HOST/task_lists/1/task_items/1" \
+curl -X DELETE "$API_HOST/task/lists/1/items/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```

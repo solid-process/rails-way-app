@@ -1,0 +1,38 @@
+<%= form_with(model: task_item, url:) do |form| %>
+  <% if task_item.errors.any? %>
+    <div style="color: red">
+      <strong><%= pluralize(task_item.errors.count, "error") %> prohibited this task item from being saved:</strong>
+
+      <ul>
+        <% task_item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description, rows: 3 %>
+  </div>
+
+  <% if action_name.in?(%w[edit update]) %>
+    <div>
+      <%= form.label :completed, style: "display: block" %>
+      <%= form.check_box :completed %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+    <%= link_to(
+      "Cancel",
+      task_list_items_path(Current.task_list_id, filter: params[:filter]),
+      style: "margin-left: 10px") %>
+  </div>
+<% end %>

@@ -1,0 +1,8 @@
+<%= render("shared/tasks/header") %>
+
+<h2>Editing task item</h2>
+
+<%= render(
+  "form",
+  task_item: @task_item,
+  url: task_list_item_path(Current.task_list_id, @task_item, filter: params[:filter])) %>

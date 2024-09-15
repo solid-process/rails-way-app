@@ -22,11 +22,11 @@ module TaskItemsConcern
   end
 
   def task_items_url(...)
-    task_list_task_items_url(Current.task_list_id, ...)
+    task_list_items_url(Current.task_list_id, ...)
   end
 
   def task_item_url(...)
-    task_list_task_item_url(Current.task_list_id, ...)
+    task_list_item_url(Current.task_list_id, ...)
   end
 
   def next_location
