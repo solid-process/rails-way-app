@@ -17,8 +17,11 @@ Rails.application.routes.draw do
     resource :registrations, only: [ :destroy ]
     resources :registrations, only: [ :new, :create ]
     resources :passwords, only: [ :new, :create, :edit, :update ]
-    resource :profiles, only: [ :edit, :update ]
-    resource :tokens, only: [ :edit, :update ]
+
+    namespace :settings do
+      resource :profile, only: [ :edit, :update ]
+      resource :token, only: [ :edit, :update ]
+    end
   end
 
   namespace :task do

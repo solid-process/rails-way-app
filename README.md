@@ -16,37 +16,70 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>033-resources-within-namespaces_mailers-under-entity-context</td></tr>
+  <tr><td><strong>Branch</strong></td><td>034-resources-within-namespaces_nested-namespaces</td></tr>
   <tr><td><strong>Lines of Code</strong></td><td>1356</td></tr>
   <tr><td><strong>Rubycritic Score</strong></td><td>91.56</td></tr>
 </table>
 
-This version continues system cohesion improvement by moving user mailer views from app/views/user_mailers to app/views/user/mailers.
+This version pushes the cohesion further by creating another nested namespace (`User::Settings`).
 
-```sh
+<table>
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
 app/views/user
-├── mailers
-│  ├── email_confirmation.html.erb
-│  ├── email_confirmation.text.erb
-│  ├── reset_password.html.erb
-│  └── reset_password.text.erb
+├── mailers/
 ├── passwords/
 ├── profiles/
 ├── registrations/
 ├── sessions/
-├── shared/
-└── tokens/
-```
+├── shared
+│  ├── links
+│  └── settings
+└── tokens
+app/controllers/user
+├── passwords_controller.rb
+├── profiles_controller.rb
+├── registrations_controller.rb
+├── sessions_controller.rb
+└── tokens_controller.rb</pre>
+    </td>
+    <td>
+      <pre>
+app/views/user
+├── mailers/
+├── passwords/
+├── registrations/
+├── sessions/
+├── settings
+│  ├── profiles/
+│  └── tokens/
+└── shared
+   └── links/
+app/controllers/user
+├── passwords_controller.rb
+├── registrations_controller.rb
+├── sessions_controller.rb
+└── settings
+   ├── profiles_controller.rb
+   └── tokens_controller.rb</pre>
+    </td>
+  </tr>
+</table>
 
 ### 🤔 Why is this structure more cohesive than the previous one? <!-- omit in toc -->
 
-Because the mailer views are now located under the user entity context.
+Because all user settings resources are isolated in the same namespace (`User::Settings`), which makes it easier to maintain and understand the codebase.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-Aiming to increase cohesion, the next version will add another nested namespace to isolate all user settings resources.
+Aiming to improve the expressiveness of the application, the next version will make more use of singular resources.
 
-`Next version`: [034-resources-within-namespaces_nested-namespaces](https://github.com/solid-process/rails-way-app/tree/034-resources-within-namespaces_nested-namespaces?tab=readme-ov-file).
+`Next version`: [035-resources-within-namespaces_singular_resources](https://github.com/solid-process/rails-way-app/tree/035-resources-within-namespaces_singular_resources?tab=readme-ov-file).
 
 ## 📣 Important info
 

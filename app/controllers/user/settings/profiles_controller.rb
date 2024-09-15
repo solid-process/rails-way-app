@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::ProfilesController < ApplicationController
+class User::Settings::ProfilesController < ApplicationController
   before_action :authenticate_user!
 
   def edit
@@ -11,7 +11,7 @@ class User::ProfilesController < ApplicationController
 
     respond_to do |format|
       if Current.user.update(user_params)
-        format.html { redirect_to edit_user_profiles_path, notice: "Your password has been updated." }
+        format.html { redirect_to edit_user_settings_profile_path, notice: "Your password has been updated." }
         format.json { render(status: :ok, json: { status: :success }) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
