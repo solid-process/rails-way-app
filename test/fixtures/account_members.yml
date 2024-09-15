@@ -1,11 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+_fixture:
+  model_class: Account::Member
 
 one:
   uuid: 6085f347-9891-49fd-94f0-49277815f83f
-  email: <%= "one@email.com" %>
-  password_digest: <%= BCrypt::Password.create("123123123") %>
 
 two:
   uuid: 76b94854-454c-4c69-b094-33e26a15f1b7
-  email: <%= "two@email.com" %>
-  password_digest: <%= BCrypt::Password.create("123123123") %>

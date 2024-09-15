@@ -9,7 +9,7 @@
     |
     <%= link_to_if(@task_list.normal?, "📝 Edit", edit_task_list_path(@task_list) ) %>
     |
-    <%= link_to_if(@task_list.normal?, "🗑 Delete", @task_list, data: {
+    <%= link_to_if(@task_list.normal?, "🗑 Delete", task_list_path(@task_list), data: {
       turbo_method: :delete,
       turbo_confirm: "Are you sure you want to delete this task list?"
     }) %>

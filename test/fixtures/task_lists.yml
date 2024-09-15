@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 _fixture:
-  model_class: Task::List
+  model_class: Account::Task::List
 
 one_inbox:
   name: Inbox

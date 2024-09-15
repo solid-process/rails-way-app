@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Task
+module Account::Task
   COMPLETED = "completed"
   INCOMPLETE = "incomplete"
 end

@@ -33,7 +33,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     task = task_items(:one)
     params = { task_item: { name: "Foo" } }
 
-    url = api_v1_helper.task__item_url(Task::List.maximum(:id) + 1, task.id)
+    url = api_v1_helper.task__item_url(Account::Task::List.maximum(:id) + 1, task.id)
 
     put(url, params:, headers: api_v1_helper.authorization_header(user))
 
@@ -44,7 +44,7 @@ class APIV1TaskItemsUpdateTest < ActionDispatch::IntegrationTest
     user = users(:one)
     params = { task_item: { name: "Foo" } }
 
-    url = api_v1_helper.task__item_url(member!(user).inbox, Task::Item.maximum(:id) + 1)
+    url = api_v1_helper.task__item_url(member!(user).inbox, Account::Task::Item.maximum(:id) + 1)
 
     put(url, params:, headers: api_v1_helper.authorization_header(user))
 

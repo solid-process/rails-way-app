@@ -22,8 +22,8 @@ class WebUserSettingsAccountDeletionTest < ActionDispatch::IntegrationTest
     assert_difference(
       -> { User.count } => -1,
       -> { Account.count } => -1,
-      -> { Membership.count } => -1,
-      -> { Task::List.count } => -1,
+      -> { Account::Membership.count } => -1,
+      -> { Account::Task::List.count } => -1,
       -> { User::Token.count } => -1
     ) do
       delete(web_helper.user__registration_url)

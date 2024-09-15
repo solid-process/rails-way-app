@@ -61,8 +61,8 @@ class APIV1UserRegistrationsTest < ActionDispatch::IntegrationTest
     assert_difference(
       -> { User.count } => 1,
       -> { Account.count } => 1,
-      -> { Membership.count } => 1,
-      -> { Task::List.count } => 1,
+      -> { Account::Membership.count } => 1,
+      -> { Account::Task::List.count } => 1,
       -> { User::Token.count } => 1
     ) do
       post(api_v1_helper.user__registrations_url, params:)
@@ -90,8 +90,8 @@ class APIV1UserRegistrationsTest < ActionDispatch::IntegrationTest
     assert_difference(
       -> { User.count } => -1,
       -> { Account.count } => -1,
-      -> { Membership.count } => -1,
-      -> { Task::List.count } => -1,
+      -> { Account::Membership.count } => -1,
+      -> { Account::Task::List.count } => -1,
       -> { User::Token.count } => -1
     ) do
       delete(api_v1_helper.user__registration_url, headers: api_v1_helper.authorization_header(user))

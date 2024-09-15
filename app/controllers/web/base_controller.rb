@@ -12,7 +12,7 @@ class Web::BaseController < ApplicationController
     return if Current.user?
 
     alert, next_path =
-      if current_user_id.present?
+      if current_user_uuid.present?
         [ "The page you are looking for does not exist, or you cannot access it.", task_lists_path ]
       else
         [ "You need to sign in or sign up before continuing.", new_user_session_path ]
@@ -33,17 +33,18 @@ class Web::BaseController < ApplicationController
     task_list_id = params[:list_id]
     task_list_id = current_task_list_id if task_list_id.blank?
 
-    Current.member!(user_id: current_user_id, task_list_id:)
+    Current.user!(uuid: current_user_uuid)
+    Current.member!(task_list_id:)
 
     self.current_task_list_id = Current.task_list_id if Current.member?
   end
 
-  def current_user_id=(id)
-    session[:user_id] = id
+  def current_user_uuid=(uuid)
+    session[:user_uuid] = uuid
   end
 
-  def current_user_id
-    session[:user_id]
+  def current_user_uuid
+    session[:user_uuid]
   end
 
   def current_task_list_id=(id)
@@ -57,7 +58,7 @@ class Web::BaseController < ApplicationController
   def sign_in(user)
     sign_out
 
-    self.current_user_id = user.id
+    self.current_user_uuid = user.uuid
 
     current_member!
   end

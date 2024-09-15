@@ -37,7 +37,7 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
-    def member!(user) = user
+    def member!(user) = Account::Member.find_by!(uuid: user.uuid)
 
     def create_task_list(account, name:)
       account.task_lists.create!(name: name)
@@ -74,7 +74,9 @@ class ActionDispatch::IntegrationTest
     def sign_in(user, password: "123123123")
       test.post(user__sessions_url, params: { user: { email: user.email, password: } })
 
-      test.assert_redirected_to task__items_url(user.inbox)
+      member = Account::Member.find_by!(uuid: user.uuid)
+
+      test.assert_redirected_to task__items_url(member.inbox)
 
       test.follow_redirect!
     end

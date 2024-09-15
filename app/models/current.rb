@@ -1,22 +1,34 @@
 # frozen_string_literal: true
 
 class Current < ActiveSupport::CurrentAttributes
-  attribute :member
+  attribute :user, :member
 
-  delegate :user,
-           :user?,
-           :task_list,
+  delegate :task_list,
            :task_lists,
            :task_list_id,
            :task_items, to: :member, allow_nil: true
 
-  def member!(**options)
-    reset
+  def member? = member&.authorized?
 
-    self.member = Account::Member.authorize(options)
+  def member!(task_list_id:)
+    self.member = Account::Member::Authorization.with(task_list_id:, uuid: user&.uuid)
   end
 
-  def member?
-    member.authorized?
+  def user? = user&.persisted?
+
+  def user!(**input)
+    self.user =
+      case input
+      in { uuid:, **nil } then User.find_by(uuid:)
+      in { token:, **nil } then find_user_by_token(token)
+      end
+  end
+
+  private
+
+  def find_user_by_token(value)
+    token = User::Token::Entity.parse(value)
+
+    User.joins(:token).find_by(user_tokens: { checksum: token.checksum }) if token.valid?
   end
 end

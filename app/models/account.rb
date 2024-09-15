@@ -3,11 +3,11 @@
 class Account < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :task_lists, dependent: :destroy, class_name: "Task::List"
-  has_many :users, through: :memberships
+  has_many :members, through: :memberships
 
   has_one :ownership, -> { owner }, class_name: "Membership", inverse_of: :account, dependent: nil
   has_one :inbox, -> { inbox }, class_name: "Task::List", inverse_of: :account, dependent: nil
-  has_one :owner, through: :ownership, source: :user
+  has_one :owner, through: :ownership, source: :member
 
-  validates :uuid, presence: true, format: /\A[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\z/
+  validates :uuid, presence: true, format: UUID::REGEXP
 end

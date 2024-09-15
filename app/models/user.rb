@@ -3,18 +3,11 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :memberships, dependent: :destroy
-  has_many :accounts, through: :memberships
-
-  has_many :task_lists, through: :accounts
-
-  has_one :ownership, -> { owner }, class_name: "Membership", inverse_of: :user, dependent: nil
-  has_one :account, through: :ownership
-  has_one :inbox, through: :account
-
   has_one :token, dependent: :destroy
 
   with_options presence: true do
+    validates :uuid, format: ::UUID::REGEXP
+
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
 
     validates :password, confirmation: true, length: { minimum: 8 }, if: -> { new_record? || password.present? }

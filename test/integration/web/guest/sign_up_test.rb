@@ -53,14 +53,14 @@ class WebGuestSignUpTest < ActionDispatch::IntegrationTest
     assert_difference(
       -> { User.count } => 1,
       -> { Account.count } => 1,
-      -> { Membership.count } => 1,
-      -> { Task::List.count } => 1,
+      -> { Account::Membership.count } => 1,
+      -> { Account::Task::List.count } => 1,
       -> { User::Token.count } => 1
     ) do
       post(web_helper.user__registrations_url, params:)
     end
 
-    assert_redirected_to web_helper.task__items_url(Task::List.inbox.last)
+    assert_redirected_to web_helper.task__items_url(Account::Task::List.inbox.last)
 
     follow_redirect!
 
@@ -68,6 +68,6 @@ class WebGuestSignUpTest < ActionDispatch::IntegrationTest
 
     assert_select(".notice", "You have successfully registered!")
 
-    assert User.exists?(email: params.dig(:user, :email), id: session[:user_id])
+    assert User.exists?(email: params.dig(:user, :email), uuid: session[:user_uuid])
   end
 end

@@ -1,4 +1,4 @@
-<%= form_with(model: task_item, url:) do |form| %>
+<%= form_with(model: task_item, url:, scope: :task_item) do |form| %>
   <% if task_item.errors.any? %>
     <div style="color: red">
       <strong><%= pluralize(task_item.errors.count, "error") %> prohibited this task item from being saved:</strong>

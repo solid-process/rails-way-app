@@ -13,7 +13,7 @@
     <% @task_lists.each do |task_list| %>
       <tr>
         <td style="width: 100%">
-          <%= link_to(task_list.name, task_list) %>
+          <%= link_to(task_list.name, task_list_path(task_list)) %>
           <div><small><%= truncate(task_list.description, length: 75) %></small></div>
         </td>
         <td><%= render("web/task/lists/actions/view_items", task_list:) %></td>

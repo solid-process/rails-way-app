@@ -16,16 +16,43 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>063-domain-model_user-operations</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1563</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>95.77</td></tr>
+  <tr><td><strong>Branch</strong></td><td>070-orthogonal-models</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1613</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>95.81</td></tr>
 </table>
 
-This version isolates some user operations into specialized POROs (1). The goal here is to reduce the model's complexity.
+**Orthogonality** is the ability to change one thing without any unseen effect on other thing.
 
-Here's how the models are organized:
+What this branch does is to decouple the `User` from the `Account` context to make the codebase even more orthogonal.
 
-```sh
+See how the two contexts are now separated:
+
+<table>
+  <tr>
+    <th>Account</th>
+    <th>User</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+app/models
+├── account
+│  ├── member
+│  │  ├── authorization.rb
+│  │  └── entity.rb
+│  ├── member.rb
+│  ├── membership.rb
+│  ├── owner
+│  │  ├── creation.rb
+│  │  └── deletion.rb
+│  ├── task
+│  │  ├── item.rb
+│  │  └── list.rb
+│  └── task.rb
+└── account.rb</pre>
+    </td>
+    <td>
+      <pre>
 app/models
 ├── user
 │  ├── account_deletion.rb
@@ -34,25 +61,26 @@ app/models
 │  ├── token
 │  │  └── entity.rb
 │  └── token.rb
-└── user.rb
-```
-
-*References:*
-(1) https://dev.37signals.com/vanilla-rails-is-plenty/#what-about-services
+└── user.rb</pre>
+    </td>
+  </tr>
+</table>
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-Can you imagine a model with hundreds of lines of code? It's hard to maintain, right? By isolating some operations into specialized POROs, we can reduce the complexity and make things easier to maintain.
+The `User` model is now more focused on the user's behavior, while the `Account` model is more focused on the account's behavior.
 
-Beyond this, did you see that the file and folder structure reveals the domain model and what kind of operations that context can do?
+This separation reduces the changes of undesired side effects when changing one of the models. This also happened when the Web and REST API resources were separated.
 
-This approach can distribute the complexity over specialized classes and, as a side effect, increase the codebase's understandability.
+Another thing to notice is Rubycritic score which increased from `95.77` to `95.81`, reflecting the high cohesion and low coupling of the codebase.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-The next iteration will define the account context and decouple the user model from it to make the codebase even more orthogonal (orthogonality = the ability to change one thing without any unseen effect on other things).
+That's all folks! There is no other branch. 😉
 
-`Next version`: [070-orthogonal-models](https://github.com/solid-process/rails-way-app/tree/070-orthogonal-models?tab=readme-ov-file).
+After all these iterations, I hope you can see the enormous difference that focusing on cohesion and coupling can make in a codebase and how a framework like Rails (which has influenced so many others) is flexible enough to accommodate all these different approaches.
+
+Ruby and Rails rocks! 🤘😎
 
 ## 📣 Important info
 

@@ -17,7 +17,7 @@ class APIV1TaskItemsCompleteTest < ActionDispatch::IntegrationTest
     user = users(:one)
     task = task_items(:one)
 
-    url = api_v1_helper.complete_task__item_url(Task::List.maximum(:id) + 1, task.id)
+    url = api_v1_helper.complete_task__item_url(Account::Task::List.maximum(:id) + 1, task.id)
 
     put(url, headers: api_v1_helper.authorization_header(user))
 
@@ -27,7 +27,7 @@ class APIV1TaskItemsCompleteTest < ActionDispatch::IntegrationTest
   test "#update responds with 404 when task is not found" do
     user = users(:one)
 
-    url = api_v1_helper.complete_task__item_url(member!(user).inbox, Task::Item.maximum(:id) + 1)
+    url = api_v1_helper.complete_task__item_url(member!(user).inbox, Account::Task::Item.maximum(:id) + 1)
 
     put(url, headers: api_v1_helper.authorization_header(user))
 

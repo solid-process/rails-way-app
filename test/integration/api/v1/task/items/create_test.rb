@@ -31,7 +31,7 @@ class APIV1TaskItemsCreateTest < ActionDispatch::IntegrationTest
     params = { task_item: { name: "Foo" } }
 
     post(
-      api_v1_helper.task__items_url(Task::List.maximum(:id) + 1),
+      api_v1_helper.task__items_url(Account::Task::List.maximum(:id) + 1),
       headers: api_v1_helper.authorization_header(user),
       params:
     )

@@ -18,10 +18,11 @@ class API::V1::BaseController < ActionController::API
   end
 
   def current_member!
-    authenticate_with_http_token do |user_token|
+    authenticate_with_http_token do |token|
       task_list_id = controller_name == "task_lists" ? params[:id] : params[:list_id]
 
-      Current.member!(user_token:, task_list_id:)
+      Current.user!(token:)
+      Current.member!(task_list_id:)
     end
   end
 

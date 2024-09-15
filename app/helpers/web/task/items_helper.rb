@@ -17,12 +17,12 @@ module Web::Task::ItemsHelper
     style = "color: var(--text) !important;"
 
     all = { title: "All", path: task_items_path, style: }
-    completed = { title: "Completed", path: task_items_path(filter: Task::COMPLETED), style: }
-    incomplete = { title: "Incomplete", path: task_items_path(filter: Task::INCOMPLETE), style: }
+    completed = { title: "Completed", path: task_items_path(filter: Account::Task::COMPLETED), style: }
+    incomplete = { title: "Incomplete", path: task_items_path(filter: Account::Task::INCOMPLETE), style: }
 
     case params[:filter]
-    when Task::INCOMPLETE then set_current_task_items_filter(incomplete)
-    when Task::COMPLETED then set_current_task_items_filter(completed)
+    when Account::Task::INCOMPLETE then set_current_task_items_filter(incomplete)
+    when Account::Task::COMPLETED then set_current_task_items_filter(completed)
     else set_current_task_items_filter(all)
     end
 
@@ -37,8 +37,8 @@ module Web::Task::ItemsHelper
 
   TASK_ITEMS_EMPTY_MESSAGES = {
     "all" => "You don't have any task items. Create one by touching the \"+ New item\" button.",
-    Task::COMPLETED => "You don't have any completed tasks. Keep up the good work!",
-    Task::INCOMPLETE => "You don't have any incomplete tasks. Great job!"
+    Account::Task::COMPLETED => "You don't have any completed tasks. Keep up the good work!",
+    Account::Task::INCOMPLETE => "You don't have any incomplete tasks. Great job!"
   }.freeze
 
   def empty_task_items_message(filter = nil)

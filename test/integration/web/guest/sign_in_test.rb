@@ -34,6 +34,6 @@ class WebGuestSignInTest < ActionDispatch::IntegrationTest
 
     assert_select(".notice", "You have successfully signed in!")
 
-    assert User.exists?(email: params.dig(:user, :email), id: session[:user_id])
+    assert User.exists?(email: params.dig(:user, :email), uuid: session[:user_uuid])
   end
 end

@@ -21,8 +21,8 @@ class Web::Task::Items::BaseController < Web::BaseController
 
   def next_location
     case params[:filter]
-    when Task::COMPLETED then task_items_url(filter: Task::COMPLETED)
-    when Task::INCOMPLETE then task_items_url(filter: Task::INCOMPLETE)
+    when Account::Task::COMPLETED then task_items_url(filter: Account::Task::COMPLETED)
+    when Account::Task::INCOMPLETE then task_items_url(filter: Account::Task::INCOMPLETE)
     when "show" then task_item_url(@task_item)
     else task_items_url
     end

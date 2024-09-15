@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class User::Registration
+  include ActiveSupport::Configurable
+
+  with_options instance_writer: false do
+    config_accessor :mailer, default: UserMailer
+    config_accessor :account_creation, default: Account::Owner::Creation
+  end
+
   attr_accessor :user
 
   def initialize(attributes = {})
@@ -8,6 +15,8 @@ class User::Registration
   end
 
   def process
+    user.uuid = UUID.generate
+
     create_user_and_account! if user.valid?
 
     { user: }
@@ -21,22 +30,14 @@ class User::Registration
 
       user.create_token!
 
-      create_account!
+      account_creation.new(uuid: user.uuid).process
 
       transaction.after_commit { send_confirmation_email! }
     end
   end
 
-  def create_account!
-    account = Account.create!(uuid: SecureRandom.uuid)
-
-    account.memberships.create!(user:, role: :owner)
-
-    account.task_lists.inbox.create!
-  end
-
   def send_confirmation_email!
-    UserMailer.with(
+    mailer.with(
       user:,
       token: user.generate_token_for(:email_confirmation)
     ).email_confirmation.deliver_later
