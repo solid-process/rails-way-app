@@ -1,7 +1,7 @@
 <% if task_item.incomplete? %>
   <%= link_to(
     "✅",
-    complete_task_list_task_item_path(Current.task_list_id, task_item, filter: params[:filter]),
+    task_list_complete_task_item_path(Current.task_list_id, task_item, filter: params[:filter]),
     title: "Mark as complete",
     data: { turbo_method: :put },
     class: 'button',
@@ -10,7 +10,7 @@
 <% else %>
   <%= link_to(
     "❌",
-    incomplete_task_list_task_item_path(Current.task_list_id, task_item, filter: params[:filter]),
+    task_list_incomplete_task_item_path(Current.task_list_id, task_item, filter: params[:filter]),
     title: "Mark as incomplete",
     data: { turbo_method: :put },
     class: 'button',

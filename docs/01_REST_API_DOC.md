@@ -224,7 +224,7 @@ curl -X PUT "$API_HOST/task_lists/1/task_items/1" \
 #### Marking as incomplete
 
 ```bash
-curl -X PUT "$API_HOST/task_lists/1/task_items/1/incomplete" \
+curl -X PUT "$API_HOST/task_lists/1/incomplete_task_items/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
@@ -232,7 +232,7 @@ curl -X PUT "$API_HOST/task_lists/1/task_items/1/incomplete" \
 #### Marking as completed
 
 ```bash
-curl -X PUT "$API_HOST/task_lists/1/task_items/1/complete" \
+curl -X PUT "$API_HOST/task_lists/1/complete_task_items/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN"
 ```

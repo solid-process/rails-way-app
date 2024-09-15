@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
 class TaskItemsController < ApplicationController
+  include TaskItemsConcern
+
   before_action :authenticate_user!
   before_action :require_task_list!
   before_action :set_task_item, except: %i[index new create]
-
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    raise exception unless request.format.json?
-
-    render_json_with_error(status: :not_found, message: "Task list or item not found")
-  end
 
   def index
     task_items = Current.task_items
@@ -75,56 +71,9 @@ class TaskItemsController < ApplicationController
     end
   end
 
-  def complete
-    @task_item.complete!
-
-    respond_to do |format|
-      format.html do
-        redirect_to(next_location, notice: "Task item was successfully marked as completed.")
-      end
-      format.json { render :show, status: :ok, location: task_item_url(@task_item) }
-    end
-  end
-
-  def incomplete
-    @task_item.incomplete!
-
-    respond_to do |format|
-      format.html do
-        redirect_to(next_location, notice: "Task item was successfully marked as incomplete.")
-      end
-      format.json { render :show, status: :ok, location: task_item_url(@task_item) }
-    end
-  end
-
   private
-
-  def require_task_list!
-    raise ActiveRecord::RecordNotFound unless Current.task_list_id
-  end
-
-  def set_task_item
-    @task_item = Current.task_items.find(params[:id])
-  end
 
   def task_item_params
     params.require(:task_item).permit(:name, :description, :completed)
-  end
-
-  def task_items_url(...)
-    task_list_task_items_url(Current.task_list_id, ...)
-  end
-
-  def task_item_url(...)
-    task_list_task_item_url(Current.task_list_id, ...)
-  end
-
-  def next_location
-    case params[:filter]
-    when "completed" then task_items_url(filter: "completed")
-    when "incomplete" then task_items_url(filter: "incomplete")
-    when "show" then task_item_url(@task_item)
-    else task_items_url
-    end
   end
 end

@@ -176,8 +176,8 @@ class ActionDispatch::IntegrationTest
 
     def task__item_url(...) = test.task_list_task_item_url(...)
     def task__items_url(...) = test.task_list_task_items_url(...)
-    def complete_task__item_url(...) = test.complete_task_list_task_item_url(...)
-    def incomplete_task__item_url(...) = test.incomplete_task_list_task_item_url(...)
+    def complete_task__item_url(...) = test.task_list_complete_task_item_url(...)
+    def incomplete_task__item_url(...) = test.task_list_incomplete_task_item_url(...)
   end
 
   def web_helper

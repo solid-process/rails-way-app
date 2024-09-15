@@ -44,7 +44,7 @@ class UserPasswordsController < ApplicationController
   private
 
   def set_user_by_token
-    @user = User.find_by_token_for(:reset_password, params[:id]) || User.find_by(id: params[:id])
+    @user = User.find_by_token_for(:reset_password, params[:id])
 
     return if @user
 

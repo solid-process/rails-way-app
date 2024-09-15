@@ -20,12 +20,9 @@ Rails.application.routes.draw do
   resource :user_tokens, only: [ :edit, :update ]
 
   resources :task_lists do
-    resources :task_items do
-      member do
-        put :complete
-        put :incomplete
-      end
-    end
+    resources :task_items
+    resources :complete_task_items, only: [ :update ]
+    resources :incomplete_task_items, only: [ :update ]
   end
 
   # Defines the root path route ("/")

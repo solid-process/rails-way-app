@@ -16,51 +16,48 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>020-multi-controllers-per-entity</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1342</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>91.34</td></tr>
+  <tr><td><strong>Branch</strong></td><td>021-multi-controllers-per-entity_rest-actions-only</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1361</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>91.56</td></tr>
 </table>
 
-The previous version demonstrates how concerns can help safely move code around, facilitating a better understanding of the different responsibilities in an implementation.
+This version ensures that all controllers only have REST actions.
 
-These were the created concerns:
-- `UserRegistrationsConcern`
-- `UserSessionsConcern`
-- `UserPasswordsConcern`
-- `UserTokensConcern`
-- `UserProfilesConcern`
+To accomplish this the `task_items#complete` and `task_items#incomplete` actions were moved to their own controller:
 
-However, since the concerns are mixins, we need to ensure that all method names are unique. After all, if any are repeated, they will overwrite each other.
+| From                             | To                                     |
+| -------------------------------- | -------------------------------------- |
+| `TaskItemsComtroller#complete`   | `CompleteTaskItemsController#update`   |
+| `TaskItemsComtroller#incomplete` | `IncompleteTaskItemsController#update` |
 
-And here is what this version does. It uses the concerns categorization to implement dedicated routes and controllers.
+Beyond this change, concern was created to share code between the `CompleteTaskItemsController,` `IncompleteTaskItemsController`, and `TaskItemsController.`
 
-See how the controllers turned out:
+See how the task items controllers are now:
 
 ```sh
-110 app/controllers/application_controller.rb
-130 app/controllers/task_items_controller.rb
- 82 app/controllers/task_lists_controller.rb
- 60 app/controllers/user_passwords_controller.rb
- 41 app/controllers/user_profiles_controller.rb
- 49 app/controllers/user_registrations_controller.rb
- 50 app/controllers/user_sessions_controller.rb
- 25 app/controllers/user_tokens_controller.rb
-547 total
+app/controllers/
+├──  concerns/
+│  └── task_items_concern.rb
+├── complete_task_items_controller.rb
+├── incomplete_task_items_controller.rb
+└── task_items_controller.rb
 ```
 
 ### 🤔 What was changed? <!-- omit in toc -->
 
-The Rubycritic score increased from `90.34` to `91.34`.
+The Rubycritic score increased from `91.34` to `91.56`.
 
-This happened because each controller allowed the isolation of each action and callback and allowed the definition of methods with the same name. (Example: `user_params` instead of `user_registration_params`, `user_session_params`, `user_password_params`...).
+This happened because each cohesion has been increased, and the controllers are more specialized.
 
-Another benefit was the routing definition. It became more readable and easier to understand as it was possible to declare them using only default `REST` actions (index, show, new, create, edit, update, destroy).
+But lets be honest, the routes are worse than before. 😅
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
-It shows how the restriction of REST actions can enforce cohesion and ensure controllers are responsible for specific contexts/concepts.
+Let's do what DHH taught us over a decade ago: https://jeromedalbert.com/how-dhh-organizes-his-rails-controllers/
 
-`Next version`: [021-multi-controllers-per-entity_rest-actions-only](https://github.com/solid-process/rails-way-app/tree/021-multi-controllers-per-entity_rest-actions-only?tab=readme-ov-file).
+This will improve the routes and put the controllers in a better structure.
+
+`Next version`: [030-resources-within-namespaces](https://github.com/solid-process/rails-way-app/tree/030-resources-within-namespaces?tab=readme-ov-file).
 
 ## 📣 Important info
 
