@@ -16,26 +16,26 @@ _**Eighteen versions**_ (gradually implemented) of a Web and REST API app made w
 ## 💡 Summary
 
 <table>
-  <tr><td><strong>Branch</strong></td><td>051-separation-of-entry-points_fat-models</td></tr>
-  <tr><td><strong>Lines of Code</strong></td><td>1456</td></tr>
-  <tr><td><strong>Rubycritic Score</strong></td><td>95.56</td></tr>
+  <tr><td><strong>Branch</strong></td><td>060-domain-model_account-member-poro</td></tr>
+  <tr><td><strong>Lines of Code</strong></td><td>1504</td></tr>
+  <tr><td><strong>Rubycritic Score</strong></td><td>95.63</td></tr>
 </table>
 
-This version increases the Rubycritic score from `94.04` to `95.56` by moving the existing duplications to the models, the famous fat models and skinny controllers.
+The `Current` class had two responsibilities: containing thread-safe shared state and queries to authorize user access.
+
+This branch separates these responsibilities, keeping the primary scope of the `Current` class (containing thread-safe and shareable state) but moving the authorization responsibility to the `Account::Member` and `Account::Member::Authorization` POROS (Plain Old Ruby Objects).
+
+POROS means a model that doesn't inherit from `ActiveRecord`, and it's a common pattern to extract complex logic from `ActiveRecord` models.
 
 ### 🤔 Why this change matter? <!-- omit in toc -->
 
-Because eliminating duplication generally increases maintenance.
-
-_**But be careful:**_ excessive and indiscriminate use of DRY (Don't Repeat Yourself) can compromise understanding and maintenance.
-
-Try to create abstractions only to address real needs (real problems).
+Cohesion + Separation of Concerns = Better understanding, maintainability and testability.
 
 ### 🔎 What the next version will have? <!-- omit in toc -->
 
 In the next version, we will enrich the application's domain model, starting with the Current class, which contains different responsibilities and a higher level of complexity.
 
-`Next version`: [060-domain-model_account-member-poro](https://github.com/solid-process/rails-way-app/tree/060-domain-model_account-member-poro?tab=readme-ov-file).
+`Next version`: [061-domain-model_user-token-poro](https://github.com/solid-process/rails-way-app/tree/061-domain-model_user-token-poro?tab=readme-ov-file).
 
 ## 📣 Important info
 
