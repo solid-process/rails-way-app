@@ -51,11 +51,11 @@ As a side effect, the user controller contains the largest number of actions (Re
 528 total
 ```
 
-#### 🤔 What is the problem with low cohesion code?  <!-- omit in toc -->
+#### 🤔 What is the problem with low-cohesion code?  <!-- omit in toc -->
 
 Low cohesion leads to greater coupling, higher costs, and efforts to promote changes.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 It will address the low cohesion of the user controller by extracting concerns into separate modules. This way, each concern will be responsible for specific actions, making the code more cohesive.
 
@@ -100,7 +100,7 @@ In this case, the use of mixins is just separating a large class into several sm
 
 The answer is _**yes**_! 🙌
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 It shows how to separate the concerns into different controllers. This way, we can have a better separation of responsibilities and avoid the collision of methods with the same name.
 
@@ -152,7 +152,7 @@ This happened because each controller allowed the isolation of each action and c
 
 Another benefit was the routing definition. It became more readable and easier to understand as it was possible to declare them using only default `REST` actions (index, show, new, create, edit, update, destroy).
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 It shows how the restriction of REST actions can enforce cohesion and ensure controllers are responsible for specific contexts/concepts.
 
@@ -199,7 +199,7 @@ This happened because each cohesion has been increased, and the controllers are 
 
 But lets be honest, the routes are worse than before. 😅
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Let's do what DHH taught us over a decade ago: https://jeromedalbert.com/how-dhh-organizes-his-rails-controllers/
 
@@ -333,7 +333,7 @@ As we can see, the controllers and routes are organized more structuredly. Each 
 
 It is worth noting that the improvement in semantics is reflected in the routes, making them simpler and more readable.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Due to the improvement of the structure, the concept of base controllers will be introduced. In other words, controllers within a namespace can have specific (more cohesive) parent classes.
 
@@ -377,7 +377,7 @@ Since the previous version, we can see that the Rubycritic score has remained th
 
 Although the score has not changed, we can see how this grouping reduces the effort to understand and find your way around the code. This also translates into increased cohesion, not at the class level but at the namespace level (groups of classes and modules).
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 The cohesion ideas (organization and grouping guided to a specific purpose) will be applied to views and partials. Check out to see the benefits of this approach.
 
@@ -465,7 +465,7 @@ To answer this, let's analyze the partials in the app/views/shared folder from t
 
 The current version shows that these partials have been moved to task or user contexts. This change created a more cohesive structure because of the lower indirection and greater specificity of each partial's use.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Aiming increasing the cohesion of the application, the next version will move the mailer views under the entity user context.
 
@@ -503,7 +503,7 @@ app/views/user
 
 Because the mailer views are now located under the user entity context.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Aiming to increase cohesion, the next version will add another nested namespace to isolate all user settings resources.
 
@@ -574,7 +574,7 @@ app/controllers/user
 
 Because all user settings resources are isolated in the same namespace (`User::Settings`), which makes it easier to maintain and understand the codebase.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Aiming to improve the expressiveness of the application, the next version will make more use of singular resources.
 
@@ -627,7 +627,7 @@ This is applicable to everything in the system, from the code to the user interf
 
 This applies to everything in the system, from the code to the user interface. This branch was added to add this concept to the spotlight.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Aiming to improve the application consistency, the following version groups some models within namespaces.
 
@@ -686,13 +686,13 @@ app/models
   </tr>
 </table>
 
-### 🤔 Why this change matter? <!-- omit in toc -->
+### 🤔 Why does this change matter? <!-- omit in toc -->
 
 Cohesion + consistency = maintainability.
 
-### 🔎 What the next version will have? <!-- omit in toc -->
+### 🔎 What will the next version have? <!-- omit in toc -->
 
-Seven iterations have been since version `021-multi-controllers-per-entity_rest_actions_only`, but the Rubycritic score has remained the same (_**91.56**_).
+There have been seven iterations since the version named `021-multi-controllers-per-entity_rest_actions_only`, but the Rubycritic score has remained the same (_**91.56**_).
 
 But what was the reason?
 
@@ -849,7 +849,7 @@ app/views/api
   </tr>
 </table>
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 In addition to the increased cohesion, we can also see each context has the freedom to represent and organize its resources semantically.
 
@@ -857,7 +857,7 @@ For example, the web application uses the profile to update passwords. When we l
 
 _**This was unfeasible with the previous approach!**_
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 Apart from adding namespaces, the implementation of models has stayed the same so far.
 
@@ -880,7 +880,7 @@ The next version will remove this duplication by concentrating logic in models.
 
 This version increases the Rubycritic score from `94.04` to `95.56` by moving the existing duplications to the models, the famous fat models and skinny controllers.
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 Because eliminating duplication generally increases maintenance.
 
@@ -888,7 +888,7 @@ _**But be careful:**_ excessive and indiscriminate use of DRY (Don't Repeat Your
 
 Try to create abstractions only to address real needs (real problems).
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 In the next version, we will enrich the application's domain model, starting with the Current class, which contains different responsibilities and a higher level of complexity.
 
@@ -911,11 +911,11 @@ This branch separates these responsibilities, keeping the primary scope of the `
 
 POROS means a model that doesn't inherit from `ActiveRecord`, and it's a common pattern to extract complex logic from `ActiveRecord` models.
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 Cohesion + Separation of Concerns = Better understanding, maintainability and testability.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 In the next version, we will enrich the application's domain model, starting with the Current class, which contains different responsibilities and a higher level of complexity.
 
@@ -945,11 +945,11 @@ Let me emphasize this part:
 > Models can also be ordinary Ruby classes, or Ruby classes that implement a set of interfaces as provided by
 the Active Model module.
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 This change matters because it's a good practice to extract complex logic from `ActiveRecord` models. As a result, the Rubycritc score increased again, from `95.63` to `95.68`.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 The next version will isolate some strings into constants to reduce codebase duplication and fragility (weak references).
 
@@ -970,13 +970,13 @@ This branch continues to enrich the domain model with a simple change. It ensure
 
 Note that this change also increases the Rubycritic score from `95.68` to `95.78`.
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 > Coupling is good when it is stable.
 
 Before this change, breaking the behavior by committing a typo anywhere coupled to these strings would be possible. Now, using constants, we have a single reference for all usage points in the
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 The next iteration will extract complex operations from the models into specialized POROs.
 
@@ -1013,7 +1013,7 @@ app/models
 *References:*
 (1) https://dev.37signals.com/vanilla-rails-is-plenty/#what-about-services
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 Can you imagine a model with hundreds of lines of code? It's hard to maintain, right? By isolating some operations into specialized POROs, we can reduce the complexity and make things easier to maintain.
 
@@ -1021,7 +1021,7 @@ Beyond this, did you see that the file and folder structure reveals the domain m
 
 This approach can distribute the complexity over specialized classes and, as a side effect, increase the codebase's understandability.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 The next iteration will define the account context and decouple the user model from it to make the codebase even more orthogonal (orthogonality = the ability to change one thing without any unseen effect on other things).
 
@@ -1038,7 +1038,7 @@ The next iteration will define the account context and decouple the user model f
   <tr><td><strong>Rubycritic Score</strong></td><td>95.81</td></tr>
 </table>
 
-**Orthogonality** is the ability to change one thing without any unseen effect on other thing.
+**Orthogonality** is the ability to change one thing without any unseen effects on other things.
 
 What this branch does is to decouple the `User` from the `Account` context to make the codebase even more orthogonal.
 
@@ -1083,7 +1083,7 @@ app/models
   </tr>
 </table>
 
-#### 🤔 Why this change matter? <!-- omit in toc -->
+#### 🤔 Why does this change matter? <!-- omit in toc -->
 
 The `User` model is now more focused on the user's behavior, while the `Account` model is more focused on the account's behavior.
 
@@ -1091,12 +1091,12 @@ This separation reduces the changes of undesired side effects when changing one 
 
 Another thing to notice is Rubycritic score which increased from `95.77` to `95.81`, reflecting the high cohesion and low coupling of the codebase.
 
-#### 🔎 What the next version will have? <!-- omit in toc -->
+#### 🔎 What will the next version have? <!-- omit in toc -->
 
 That's all folks! There is no other branch. 😉
 
 After all these iterations, I hope you can see the enormous difference that focusing on cohesion and coupling can make in a codebase and how a framework like Rails (which has influenced so many others) is flexible enough to accommodate all these different approaches.
 
-Ruby and Rails rocks! 🤘😎
+Ruby and Rails rock! 🤘😎
 
 <p align="right"><a href="#-table-of-contents-">⬆ back to top</a></p>
